@@ -10,77 +10,73 @@ const errorMsg = {
 }
 
 function Register(){       
-    const [user, setUser] = useState({name:'',email:'',password:''})
-    const [validated, setValidated] = useState(false);
-    const [resultMessage,setResultMessage] = useState({code:"200",message:"ok"})
+    let [Id, IdChanged] = useState(null) 
+    let [Pwd, PwdChanged] = useState(null) 
+    let [Email, EmailChanged] = useState(null) 
+    let [Phone, PhoneChanged] = useState(null) 
+    let [UserType, UserTypeChanged] = useState(-1) 
 
-    const [isValid,setIsValid] = useState(false);
-    const [errorMail,setErrorMail] = useState(errorMsg.empty);
-
-    function handleName(e){
-        console.log(e.target.value);
+    const Btn_Register_Click = () => {
+        
     }
-
-    function handleEmail(e){
-        console.log(e.target.value);
-    }
-    function handlePassword(e){
-
-    }
-
-    function handleSubmit(event){
-        const form = event.currentTarget;
-       
-    };
 
     return(
         <div className='Register-Layout'>
-            <h3>계정 생성</h3>                       
-           <Container className={"text-center"} fluid>
-            <Form noValidate validated={validated} className="form-signup" onSubmit={handleSubmit}>
-                <h1 className="h3 mb-3 font-weight-normal">Please sign up</h1>
-                <Form.Group controlId={"formBasicName"}>
-                    <Form.Label className="sr-only">Name</Form.Label>
-                    <Form.Control className={"form-signup-input"} 
-                                  onChange={handleName} 
-                                  type={"text"} 
-                                  placeholder={"Enter name"}
-                                  minLength={"3"}
-                                  required  />
-                    <Form.Control.Feedback type="invalid" className={"float-left"}>
-                        이름을 입력해주세요!(3글자 이상입력)
-                    </Form.Control.Feedback>
-                </Form.Group>
-                <Form.Group controlId={"formBasicEmail"}>
-                    <Form.Label className="sr-only">Email address</Form.Label>
-                    <Form.Control className={`form-signup-email ${isValid?'is-invalid':''}`} 
-                                  onChange={handleEmail} 
-                                  type={"email"} 
-                                  placeholder={"Enter email"} 
-                                  required />
-                    <Form.Control.Feedback type="invalid" className={"float-left"}>
-                        {errorMail}
-                    </Form.Control.Feedback>
-                </Form.Group>
-                <Form.Group controlId={"formBasicPassword"}>
-                    <Form.Label className="sr-only">Password</Form.Label>
-                    <Form.Control className={"form-signup-input"} 
-                                  onChange={handlePassword} 
-                                  type={"password"} 
-                                  placeholder={"Password"} 
-                                  required />
-                    <Form.Control.Feedback type="invalid" className={"float-left"}>
-                        비밀번호를 입력해주세요!
-                    </Form.Control.Feedback>
-                </Form.Group>
-                <Button className="btn btn-lg btn-primary btn-block" variant={"primary"} type={"submit"}>
-                    Sign up
-                </Button>
-                <p className={"float-left"}><a href={"/signin"}>Sign in</a></p>
-                <p className="mt-5 mb-3 text-muted">&copy; BlockReviews</p>
-            </Form>
-        </Container>
+            <div className='block-review-banner'>
+                BLOCK REVIEWS
+            </div>
+            <div className='content-layout'>
+                <h2>회원 가입</h2>
+                <div className='d-flex align-items-center mb-3 mt-3'>
+                    <div style={{ width: "150px", marginRight: "5px" }}>
+                        ID
+                    </div>
+                    <div>
+                        <input style={{minWidth:"300px"}} className='form-control' placeholder='아이디를 입력해주세요' onChange={(e) => { IdChanged(e.target.value) }} type={"text"} />
+                    </div>
+                </div>
+                <div className='d-flex align-items-center  mb-3'>
+                    <div style={{ width: "150px", marginRight: "5px" }}>
+                        PassWord
+                    </div>
+                    <div>
+                        <input style={{minWidth:"300px"}} className='form-control' placeholder='비밀번호를 입력해주세요' onChange={(e) => { PwdChanged(e.target.value) }} type={"password"} />
+                    </div>
+                </div>
+                <div className='d-flex align-items-center  mb-3'>
+                    <div style={{ width: "150px", marginRight: "5px" }}>
+                        핸드폰 번호
+                    </div>
+                    <div>
+                        <input style={{minWidth:"300px"}} className='form-control' placeholder='핸드폰 번호 - 없이 입력해주세요' onChange={(e) => { PhoneChanged(e.target.value) }} type={"text"} />
+                    </div>
+                </div>
+                <div className='d-flex align-items-center  mb-3'>
+                    <div style={{ width: "150px", marginRight: "5px" }}>
+                        이메일
+                    </div>
+                    <div>
+                        <input style={{minWidth:"300px"}} className='form-control' placeholder='이메일 입력해주세요' onChange={(e) => { EmailChanged(e.target.value) }} type={"email"} />
+                    </div>
+                </div>
+                <div className='d-flex align-items-center  mb-3'>
+                    <div style={{ width: "150px", marginRight: "5px" }}>
+                        사용자 타입
+                    </div>
+                    <div>
+                        <select style={{minWidth:"300px"}} onChange={(e) => { UserTypeChanged(e.target.value)}} class="form-select" id="validationCustom04" required>
+                            <option selected disabled value={-1}>사용자 타입을 선택해주세요</option>
+                            <option value={0}>일반 사용자</option>
+                            <option value={1}>지점주</option>
+                        </select>                        
+                    </div>
+                </div>
+                <div className='d-flex justify-content-center'>
+                    <button className='btn btn-primary m-2' onClick={Btn_Register_Click}>회원가입</button>                    
+                </div>
+            </div>
         </div>
+        
     )
 }
 
