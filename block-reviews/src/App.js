@@ -1,3 +1,4 @@
+import React from "react";
 import './App.css';
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -12,6 +13,7 @@ function App() {
         <Route path="/" element={<Login />} />
         <Route path="Register" element={<Register />} />
       </Routes>
+
     </div>
 
   );
