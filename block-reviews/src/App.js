@@ -1,15 +1,21 @@
 import React from "react";
-import WriteReview from "./components/review/WriteReview";
-import { init, web3, account } from "./config-web3";
-import Detail from "./components/review/Detail";
+import './App.css';
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Login from './components/login/Login';
+import Register from './components/login/Register';
 
 function App() {
   return (
-    <div>
-      <button onClick={init}>Init Test</button>
-      <Detail />
+
+    <div className='App'>
+      <Routes>
+        <Route path="/" element={<Login />} />
+        <Route path="Register" element={<Register />} />
+      </Routes>
+
     </div>
+
   );
 }
-
 export default App;
