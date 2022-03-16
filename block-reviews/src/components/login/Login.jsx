@@ -1,51 +1,61 @@
 import '../../scss/Login.scss'
-import { Form, Container, Button} from 'react-bootstrap'
 import { Link } from "react-router-dom";
+import {useState} from 'react';
+const axios = require('axios');
 
+function Login() {            
+    var [Id,IdChanged] = useState(null);
+    var [Pwd,PwdChanged] = useState(null);
+    var [WalletFile, FileChanged] = useState(null);
+    
+    const Btn_Login_Click = () => {
+        console.log(Id, Pwd)
+        if (!Id || !Pwd){
+            alert("아이디와 비밀번호 모두 입력해주세요");
+        }
+        else{
 
-function Login() {    
+        }
+    }
 
-   
     return (
         <div className='Register-Layout'>            
-            <h3>계정 생성</h3>
-            <Container>
-                <Form>
-                    <Form.Group controlId={"formBasicName"}>
-                        <Form.Label className="sr-only float-left">아이디</Form.Label>
-                        <Form.Control className={"form-signup-input"}                                   
-                                    type={"text"} 
-                                    placeholder={"아이디를 입력해주세요"}
-                                    minLength={"5"}
-                                    required  />
-                        <Form.Control.Feedback type="invalid" className={"float-left"}>
-                            ID를 입력해주세요 (5자 이상 입력)
-                        </Form.Control.Feedback>                    
-                    </Form.Group>
-                    <Form.Group controlId={"formBasicName"} >
-                        <Form.Label className={"sr-only float-left"}>비밀번호</Form.Label>
-                        <Form.Control className={"form-signup-input"}                                   
-                                    type={"password"} 
-                                    placeholder={"비밀번호를 입력해주세요"}                                    
-                                    required  />
-                        <Form.Control.Feedback type="invalid" className={"float-left"}>
-                            비밀번호를 입력해주세요
-                        </Form.Control.Feedback>                    
-                    </Form.Group>
-                    <div className='d-flex jusity justify-content-center'>
-                        <Link to="Home">
-                            <Button className="btn btn-lg m-2 btn-primary btn-block" variant={"primary"} type={"submit"}>
-                                로그인
-                            </Button>
-                        </Link>         
-                        <Link to="Register">
-                            <Button className="btn btn-lg m-2 btn-block" variant={"primary"} type={"submit"}>
-                                계정 생성
-                            </Button>
-                        </Link>               
+            <div className='block-review-banner'>
+                BLOCK REVIEWS
+            </div>
+            <div className='content-layout'>
+                <h2>로그인</h2>
+                <div className='d-flex align-items-center mb-3 mt-3'>
+                    <div style={{width:"150px", marginRight:"5px"}}>
+                        ID
                     </div>
-                </Form>
-            </Container>            
+                    <div>
+                        <input className='form-control' placeholder='아이디를 입력해주세요' onChange={(e) => {IdChanged(e.target.value)}} type={"text"}/>
+                    </div>
+                </div>       
+                <div className='d-flex align-items-center  mb-3'>
+                    <div style={{width:"150px", marginRight:"5px"}}>
+                        PassWord
+                    </div>
+                    <div>
+                        <input className='form-control' placeholder='비밀번호를 입력해주세요' onChange={(e) => {PwdChanged(e.target.value)}} type={"password"}/>
+                    </div>
+                </div>    
+                <div className='d-flex align-items-center  mb-3'>
+                    <div style={{width:"150px", marginRight:"5px"}}>
+                        지갑 파일
+                    </div>
+                    <div>
+                        <input className='form-control' value={WalletFile} onChange={(e) => {FileChanged(e.target.files[0])}} type={"file"}/>
+                    </div>
+                </div>    
+                <div className='d-flex justify-content-center'>
+                    <button className='btn btn-primary m-2' onClick={Btn_Login_Click}>로그인</button>
+                    <Link to="Register">
+                        <button className='btn btn-secondary m-2'>회원가입</button>
+                    </Link>
+                </div>
+            </div>
         </div>
     )
 }
