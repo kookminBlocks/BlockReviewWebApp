@@ -22,10 +22,7 @@ function Register(){
 
     return(
         <div className='Register-Layout'>
-            <div className='block-review-banner'>
-                BLOCK REVIEWS
-            </div>
-            <div className='content-layout'>
+                <div className='content-layout'>
                 <h2>회원 가입</h2>
                 <div className='d-flex align-items-center mb-3 mt-3'>
                     <div style={{ width: "150px", marginRight: "5px" }}>
