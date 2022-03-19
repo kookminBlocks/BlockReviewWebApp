@@ -27,7 +27,7 @@ function Register(){
             Password:Pwd,
             Name : NickName,
             Email : Email,
-            UserType : UserType,            
+            UserType : parseInt(UserType),
             Phone : Phone,
         })
         .then(res => {     
@@ -87,7 +87,7 @@ function Register(){
                         사용자 타입
                     </div>
                     <div>
-                        <select style={{minWidth:"300px"}} onChange={(e) => {  UserTypeChanged(e.target.valueAsNumber);}} class="form-select" id="validationCustom04" required>
+                        <select style={{minWidth:"300px"}} onChange={(e) => {  UserTypeChanged(e.target.value);}} class="form-select" id="validationCustom04" required>
                             <option selected disabled value={-1}>사용자 타입을 선택해주세요</option>
                             <option value={0}>일반 사용자</option>
                             <option value={1}>지점주</option>
