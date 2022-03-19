@@ -3,6 +3,8 @@ import {useState} from 'react';
 import { Form, Container, Button} from 'react-bootstrap'
 import { Link } from "react-router-dom";
 import { IdCheck } from "../../api/login"
+import axios from 'axios';
+
 
 const errorMsg = {
     'empty' : '메일 주소를 입력해주세요',
@@ -12,12 +14,28 @@ const errorMsg = {
 function Register(){       
     let [Id, IdChanged] = useState(null) 
     let [Pwd, PwdChanged] = useState(null) 
+    let [NickName, NameChanged] = useState(null)
     let [Email, EmailChanged] = useState(null) 
     let [Phone, PhoneChanged] = useState(null) 
     let [UserType, UserTypeChanged] = useState(-1) 
 
     const Btn_Register_Click = () => {
-        
+        console.log(UserType)
+
+        axios.post('https://localhost:44387/api/User/Register', {                       
+            id:Id,
+            Password:Pwd,
+            Name : NickName,
+            Email : Email,
+            UserType : UserType,            
+            Phone : Phone,
+        })
+        .then(res => {     
+            console.log(res.data)
+        })
+        .catch(function() {
+
+        });
     }
 
     return(
@@ -38,6 +56,14 @@ function Register(){
                     </div>
                     <div>
                         <input style={{minWidth:"300px"}} className='form-control' placeholder='비밀번호를 입력해주세요' onChange={(e) => { PwdChanged(e.target.value) }} type={"password"} />
+                    </div>
+                </div>
+                <div className='d-flex align-items-center mb-3 mt-3'>
+                    <div style={{ width: "150px", marginRight: "5px" }}>
+                        닉네임
+                    </div>
+                    <div>
+                        <input style={{minWidth:"300px"}} className='form-control' placeholder='닉네임을 입력해주세요' onChange={(e) => { NameChanged(e.target.value) }} type={"text"} />
                     </div>
                 </div>
                 <div className='d-flex align-items-center  mb-3'>
@@ -61,7 +87,7 @@ function Register(){
                         사용자 타입
                     </div>
                     <div>
-                        <select style={{minWidth:"300px"}} onChange={(e) => { UserTypeChanged(e.target.value)}} class="form-select" id="validationCustom04" required>
+                        <select style={{minWidth:"300px"}} onChange={(e) => {  UserTypeChanged(e.target.valueAsNumber);}} class="form-select" id="validationCustom04" required>
                             <option selected disabled value={-1}>사용자 타입을 선택해주세요</option>
                             <option value={0}>일반 사용자</option>
                             <option value={1}>지점주</option>

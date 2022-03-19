@@ -1,7 +1,7 @@
 import '../../scss/Login.scss'
 import { Link } from "react-router-dom";
 import { useState } from 'react';
-const axios = require('axios');
+import axios from 'axios';
 
 function AddStore() {
     var [storeTitle, titleChanged] = useState(null);
