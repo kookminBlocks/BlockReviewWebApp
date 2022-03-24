@@ -6,6 +6,7 @@ import Login from './components/login/Login';
 import Register from './components/login/Register';
 import WriteReview from "./components/review/WriteReview";
 import DetailReview from "./components/review/Detail";
+import DetailStore from "./components/Stores/DetailStore";
 import My from "./components/user/My";
 
 
@@ -18,6 +19,7 @@ function App() {
         <Route path="Register" element={<Register />} />
         <Route path="/my/:userId" element={<My />} />
         <Route path="/review/write" element={<WriteReview />} />
+        <Route path="/review/detail" element={<DetailStore />} />
         <Route path="/review/:reviewId" element={<Register />} />
       </Routes>
 
