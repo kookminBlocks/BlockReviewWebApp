@@ -11,10 +11,21 @@ function Login() {
     const Btn_Login_Click = () => {
         console.log(Id, Pwd)
         if (!Id || !Pwd){
-
+            alert('아이디와 패스워드를 입력해주세요');
         }
         else{
-
+            axios.post('https://localhost:44387/api/User/Login', {                       
+                id:Id,
+                Password:Pwd,
+            })
+            .then(res => {     
+                if (res.status == 200) {
+                    navigate('/');
+                }
+            })
+            .catch(function() {
+                
+            });
         }
     }
 
