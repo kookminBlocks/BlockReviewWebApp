@@ -19,7 +19,7 @@ function App() {
             </div>
       <Routes>
         <Route path="/" element={<Login />} />
-        <Route path="Register" element={<Register />} />
+        <Route path="/register" element={<Register />} />
         <Route path="/store" element={<AddStore/>}/>
         <Route path="/my/:userId" element={<My />} />
         <Route path="/review/write" element={<WriteReview />} />

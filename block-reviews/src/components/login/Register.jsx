@@ -1,8 +1,6 @@
 import '../../scss/Login.scss'
-import {useState} from 'react';
-import { Form, Container, Button} from 'react-bootstrap'
-import { Link } from "react-router-dom";
-import { IdCheck } from "../../api/login"
+import { useState } from 'react';
+import { Navigate, useNavigate } from "react-router-dom";
 import axios from 'axios';
 
 
@@ -12,12 +10,14 @@ const errorMsg = {
 }
 
 function Register(){       
-    let [Id, IdChanged] = useState(null) 
-    let [Pwd, PwdChanged] = useState(null) 
-    let [NickName, NameChanged] = useState(null)
-    let [Email, EmailChanged] = useState(null) 
-    let [Phone, PhoneChanged] = useState(null) 
-    let [UserType, UserTypeChanged] = useState(-1) 
+    const navigate = useNavigate();
+
+    let [Id, IdChanged] = useState(null);
+    let [Pwd, PwdChanged] = useState(null);
+    let [NickName, NameChanged] = useState(null);
+    let [Email, EmailChanged] = useState(null); 
+    let [Phone, PhoneChanged] = useState(null);
+    let [UserType, UserTypeChanged] = useState(-1);
 
     const Btn_Register_Click = () => {
         console.log(UserType)
@@ -31,7 +31,9 @@ function Register(){
             Phone : Phone,
         })
         .then(res => {     
-            console.log(res.data)
+            if (res.status == 200) {
+                navigate('/');
+            }
         })
         .catch(function() {
 

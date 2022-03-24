@@ -1,7 +1,7 @@
 import '../../scss/Login.scss'
 import { Link } from "react-router-dom";
 import {useState} from 'react';
-const axios = require('axios');
+import axios from 'axios';
 
 function Login() {            
     var [Id,IdChanged] = useState(null);
@@ -11,7 +11,7 @@ function Login() {
     const Btn_Login_Click = () => {
         console.log(Id, Pwd)
         if (!Id || !Pwd){
-            alert("아이디와 비밀번호 모두 입력해주세요");
+
         }
         else{
 
