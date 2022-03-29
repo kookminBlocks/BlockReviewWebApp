@@ -1,6 +1,6 @@
 import '../../scss/Login.scss'
 import { Link } from "react-router-dom";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 
 function AddStore() {
@@ -15,7 +15,20 @@ function AddStore() {
     const CateLevel1List = []
     const CateLevel2List = []
  
-
+    useEffect(() => {
+        axios.get('https://localhost:44387/api/User/SelectCateList/1')
+            .then(res => {     
+                if (res.status == 200) {
+                    console.log(res.data)
+                }
+                else{
+                    
+                }
+            })
+            .catch(function() {
+                
+            });
+    },[]);
 
     const Btn_Create_Click = () => {
         

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useState } from 'react';
 import github from '../../images/github.png'
 
-function AddStore() {
+function AddStore(storeId) {
     const store = {Name:"가게", description: "설명", cate1:"음식점", cate2:"브런치 카페", thumbnail : {github}, Phone:"0100000000", address:"경기도 성남시 샬라샬라"}
     
 

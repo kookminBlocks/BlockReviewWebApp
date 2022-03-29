@@ -19,8 +19,7 @@ function Register(){
     let [Phone, PhoneChanged] = useState(null);
     let [UserType, UserTypeChanged] = useState(-1);
 
-    const Btn_Register_Click = () => {
-        console.log(UserType)
+    const Btn_Register_Click = () => {        
 
         axios.post('https://localhost:44387/api/User/Register', {                       
             id:Id,
@@ -29,10 +28,15 @@ function Register(){
             Email : Email,
             UserType : parseInt(UserType),
             Phone : Phone,
-        })
-        .then(res => {     
+        }, {responseType: 'blob'})
+        .then((res) => {           
             if (res.status == 200) {
-                navigate('/');
+                const url = window.URL.createObjectURL(new Blob([res.data]));
+                const link = document.createElement('a');
+                link.href = url;
+                link.setAttribute('download', Id+ '_account'+'.csv'); 
+                document.body.appendChild(link);
+                link.click();                
             }
         })
         .catch(function() {

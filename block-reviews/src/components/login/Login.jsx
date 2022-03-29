@@ -1,26 +1,33 @@
 import '../../scss/Login.scss'
 import { Link } from "react-router-dom";
 import {useState} from 'react';
+import { Navigate, useNavigate } from "react-router-dom";
 import axios from 'axios';
 
-function Login() {            
+function Login(setToken) {            
+    const navigate = useNavigate();
+
     var [Id,IdChanged] = useState(null);
     var [Pwd,PwdChanged] = useState(null);
     var [WalletFile, FileChanged] = useState(null);
     
-    const Btn_Login_Click = () => {
-        console.log(Id, Pwd)
+    const Btn_Login_Click = () => {        
         if (!Id || !Pwd){
             alert('아이디와 패스워드를 입력해주세요');
         }
         else{
             axios.post('https://localhost:44387/api/User/Login', {                       
                 id:Id,
-                Password:Pwd,
+                PassWord:Pwd,
             })
             .then(res => {     
                 if (res.status == 200) {
-                    navigate('/');
+                    localStorage.setItem('user', res.data)
+                    setToken(res.data.id);
+                    navigate("/store/list");
+                }
+                else{
+                    alert('아이디 혹은 비밀번호가 확인되지 않습니다.')
                 }
             })
             .catch(function() {
