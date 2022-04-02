@@ -23,7 +23,7 @@ function WriteReview(props) {
 
        <TitleInput type="text" placeholder="Title" value={Title_Input} onChange={e => setTitle_Input(e.currentTarget.value)} />
        <DescriptionTextarea placeholder="Description" value={Description_Input} onChange={e => setDescription_Input(e.currentTarget.value)} />
-       
+
        <FunctionBtnBox>
            <Btn onClick={handleCancel}>취소</Btn>
            <Btn onClick={handleSubmit}>확인</Btn>
@@ -39,7 +39,8 @@ const Form = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    height: 100%;
+    margin-top: 5rem;
 `;
 
 const Title = styled.h1`
@@ -74,6 +75,8 @@ const FunctionBtnBox = styled.div`
 `;
 
 const Btn = styled.button`
+    width: 100px;
+    padding: 10px;
     border: 1px solid lightgray;
     background-color: white;
     &:hover{
