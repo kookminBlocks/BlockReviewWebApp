@@ -1,6 +1,5 @@
 import Web3 from "web3";
 import { RelayProvider } from "@opengsn/provider";
-import { ethers } from "ethers";
 
 export let web3;
 export let account;
