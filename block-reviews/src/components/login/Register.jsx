@@ -1,7 +1,7 @@
 import '../../scss/Login.scss'
 import { useState } from 'react';
 import { Navigate, useNavigate } from "react-router-dom";
-import axios from 'axios';
+import { RegisterAPICall } from  '../../api/user'
 
 
 const errorMsg = {
@@ -19,29 +19,28 @@ function Register(){
     let [Phone, PhoneChanged] = useState(null);
     let [UserType, UserTypeChanged] = useState(-1);
 
-    const Btn_Register_Click = () => {        
+    const Btn_Register_Click = async () => {  
+        var userinfo = {
+            Id: Id,
+            Pwd: Pwd,
+            NickName: NickName,
+            Email: Email,
+            UserType: UserType,
+            Phone: Phone
+        }
 
-        axios.post('https://localhost:44387/api/User/Register', {                       
-            id:Id,
-            Password:Pwd,
-            Name : NickName,
-            Email : Email,
-            UserType : parseInt(UserType),
-            Phone : Phone,
-        }, {responseType: 'blob'})
-        .then((res) => {           
-            if (res.status == 200) {
-                const url = window.URL.createObjectURL(new Blob([res.data]));
-                const link = document.createElement('a');
-                link.href = url;
-                link.setAttribute('download', Id+ '_account'+'.csv'); 
-                document.body.appendChild(link);
-                link.click();                
-            }
-        })
-        .catch(function() {
-            
-        });
+        const res = await RegisterAPICall(userinfo);
+             
+        if (res.status == 200) {                
+            const url = window.URL.createObjectURL(new Blob([res.data]));
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download', userinfo.Id+ '_account'+'.csv'); 
+            document.body.appendChild(link);
+            link.click();   
+            alert('csv 파일은 로그인 시 필요합니다 반드시 저장해주세요')
+            navigate('/')                            
+        }
     }
 
     return(

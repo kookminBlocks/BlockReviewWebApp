@@ -23,7 +23,7 @@ function Header(props) {
                 <RouteBtn onClick={route} className={`/my/:userId`}>My</RouteBtn>
                 <RouteBtn onClick={route} className="/register">LOG-IN</RouteBtn>
             </RouteBox>
-
+ss
         </HeaderComponent>
     )
 }
