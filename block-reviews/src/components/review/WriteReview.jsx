@@ -19,7 +19,8 @@ function WriteReview(props) {
         
     return (
        <Form>
-       <Title>리뷰작성</Title>
+        <Title>리뷰작성</Title>
+
 
        <TitleInput type="text" placeholder="Title" value={Title_Input} onChange={e => setTitle_Input(e.currentTarget.value)} />
        <DescriptionTextarea placeholder="Description" value={Description_Input} onChange={e => setDescription_Input(e.currentTarget.value)} />
