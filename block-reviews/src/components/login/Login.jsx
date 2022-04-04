@@ -4,7 +4,7 @@ import {useState} from 'react';
 import { Navigate, useNavigate } from "react-router-dom";
 import { LoginAPICall }  from  '../../api/user'
 
-function Login(userLogin) {            
+function Login() {            
     const navigate = useNavigate();
 
     var [Id,IdChanged] = useState(null);
@@ -28,9 +28,7 @@ function Login(userLogin) {
                 PrivateKey: null,
                 PublicKey: null
             };
-            
-            
-
+                        
             const fileReader = new FileReader();
             fileReader.onload = async function (event) {
                 const csvOutput = event.target.result;

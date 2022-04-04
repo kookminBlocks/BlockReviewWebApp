@@ -1,33 +1,53 @@
-import React, { useState } from "react";
-import './App.css';
+// #region library
+import React, { useEffect, useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
+//#endregion
+// #region Comp URL
 import Login from './components/login/Login';
 import Register from './components/login/Register';
-import WriteReview from "./components/review/WriteReview";
-import DetailReview from "./components/review/Detail";
-import DetailStore from "./components/stores/DetailStore";
 import My from "./components/user/My";
 import AddStore from "./components/stores/AddStore";
 import Header from "./components/Header/Header";
+//#endregion
+// #region location
+import './App.css';
+import LoginCheck from './components/Commons/IsLogin'
+import { login_Url, MyPage_Url, Register_Url, StoreList_Url, StoreCreate_Url } from './components/Commons/PathUrl'
+import PrivateRoute from "./components/Commons/PrivateRoute";
+//#endregion
 
 
 function App() {
+  const [user, setUser] = useState(null)
+  const [isLogin, setIsLogin] = useState(false);
+
+  useEffect(() => {
+    if (LoginCheck) {
+      setIsLogin(true);
+      setUser(localStorage.getItem('user'));
+    }
+    else {
+      setIsLogin(false);
+    }
+  })
+
   return (
+
     <div className='App'>
-      {
-        <Header />
-      }
-        <div className='block-review-banner'>
-            BLOCK REVIEWS
-        </div>
+      <Header />
+      <div className='block-review-banner'>
+        BLOCK REVIEWS
+      </div>
       <Routes>
-        <Route path="/" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/store" element={<AddStore/>}/>
-        <Route path="/my/:userId" element={<My />} />
-        <Route path="/review/write" element={<WriteReview />} />
-        <Route path="/review/:reviewId" element={<DetailStore />} />
+        <Route exact path={login_Url} element={<Login />} />
+        <Route exact path={Register_Url} element={<Register />} />
+        <Route element={<PrivateRoute isLogin={isLogin} />}>
+          <Route path={StoreList_Url} element={<StoreList_Url />} />
+          <Route path={StoreCreate_Url} element={<AddStore />} />
+          <Route path={MyPage_Url} element={<My />} />
+        </Route>
+        <Route path="*" element={<p>There's nothing here: 404!</p>} />
       </Routes>
 
     </div>
