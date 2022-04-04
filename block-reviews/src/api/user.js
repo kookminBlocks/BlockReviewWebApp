@@ -1,6 +1,6 @@
-import { Navigate, useNavigate } from "react-router-dom";
 import api from  './apiClient'
 
+// 계정 생성
 export const RegisterAPICall = async (userinfo) => {
     console.log(userinfo)
 
@@ -18,7 +18,7 @@ export const RegisterAPICall = async (userinfo) => {
     return res;
 }
 
-
+// 로그인 API 호출
 export const LoginAPICall = async (userinfo) => {
     console.log(userinfo)
     

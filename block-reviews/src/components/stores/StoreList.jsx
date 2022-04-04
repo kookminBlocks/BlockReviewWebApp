@@ -1,22 +1,20 @@
 import '../../scss/Login.scss'
 import { useState, useEffect } from 'react';
-import axios from 'axios';
+import { GetStores }  from  '../../api/store'
+
 
 function AddStore() {
     const [stores, storeChanged] = useState([])    
     
     useEffect(() => {
-        axios.get('https://localhost:44387/api/Stores/Get')
-        .then(res => {     
-            if (res.status == 200) {
-                localStorage.getItem('user')
-            }
-            else{
-                console.log('store 데이터가 없습니다.')
-            }
-        })
-        .catch(function() {
-        });        
+        const res = await GetStores();
+        if (res.status == 200)
+        {
+            storeChanged(res.data)
+        }
+        else{
+            
+        }
     },[])    
 
 
@@ -34,9 +32,9 @@ function AddStore() {
                     }
                 </div>
                 :
-                <div>
+                <p>
                     등록된 지점이 없습니다.
-                </div>
+                </p>
             }
         </>
     )
