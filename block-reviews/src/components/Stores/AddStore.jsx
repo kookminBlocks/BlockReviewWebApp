@@ -19,6 +19,7 @@ function AddStore() {
     var [location, locationChanged] = useState(null);
     
     const CateLevel1List = []
+    
     const CateLevel2List = []     
 
     useEffect(async () => {

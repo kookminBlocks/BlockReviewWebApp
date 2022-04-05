@@ -1,3 +1,7 @@
-const isLogin = () => !!localStorage.getItem('user');
+function isLogin(){
+    return(
+        !!localStorage.getItem('user')
+    )
+};
 
 export default isLogin;

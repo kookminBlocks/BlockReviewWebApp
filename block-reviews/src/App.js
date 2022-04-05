@@ -1,6 +1,6 @@
 // #region library
 import React, { useEffect, useState } from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, useNavigate, Route, Routes } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 //#endregion
 // #region Comp URL
@@ -13,22 +13,23 @@ import Header from "./components/Header/Header";
 // #region location
 import './App.css';
 import LoginCheck from './components/Commons/IsLogin'
-import { login_Url, MyPage_Url, Register_Url, StoreList_Url, StoreCreate_Url } from './components/Commons/PathUrl'
+import { login_Url,logout_Url , MyPage_Url, Register_Url, StoreList_Url, StoreCreate_Url } from './components/Commons/PathUrl'
 import PrivateRoute from "./components/Commons/PrivateRoute";
+import PublicRoute from "./components/Commons/PublicRoute";
+import StoreList from "./components/stores/StoreList";
 //#endregion
 
 
 function App() {
   const [user, setUser] = useState(null)
-  const [isLogin, setIsLogin] = useState(false);
+
+  // const navigate = useNavigate();
 
   useEffect(() => {
-    if (LoginCheck) {
-      setIsLogin(true);
+    if (LoginCheck()) {
       setUser(localStorage.getItem('user'));
     }
     else {
-      setIsLogin(false);
     }
   })
 
@@ -39,14 +40,39 @@ function App() {
       <div className='block-review-banner'>
         BLOCK REVIEWS
       </div>
-      <Routes>
-        <Route exact path={login_Url} element={<Login />} />
-        <Route exact path={Register_Url} element={<Register />} />
-        <Route element={<PrivateRoute isLogin={isLogin} />}>
-          <Route path={StoreList_Url} element={<StoreList_Url />} />
-          <Route path={StoreCreate_Url} element={<AddStore />} />
-          <Route path={MyPage_Url} element={<My />} />
-        </Route>
+      <Routes>      
+        <Route path={login_Url} element={
+          <PublicRoute>
+            <Login/>
+          </PublicRoute>}>          
+        </Route>        
+        <Route path={Register_Url} element={
+          <PublicRoute>
+            <Register />
+          </PublicRoute>}>          
+        </Route>       
+
+        <Route path={StoreList_Url} element={
+          <PrivateRoute>
+            <StoreList />
+          </PrivateRoute>}>          
+        </Route>   
+        <Route path={StoreCreate_Url} element={
+          <PrivateRoute>
+            <AddStore />
+          </PrivateRoute>}>          
+        </Route>  
+        <Route path={MyPage_Url} element={
+          <PrivateRoute>
+            <My />
+          </PrivateRoute>}>          
+        </Route>  
+        {/* <Route path={logout_Url} element={
+          <PrivateRoute isLogin={isLogin}>
+            <Logout />
+          </PrivateRoute>}>          
+        </Route>  
+      */}
         <Route path="*" element={<p>There's nothing here: 404!</p>} />
       </Routes>
 
