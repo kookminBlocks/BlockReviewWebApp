@@ -1,21 +1,31 @@
 import { React, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
-import { MyPage_Url, StoreCreate_Url } from '../Commons/PathUrl'
-import isLogin from '../Commons/IsLogin'
+import { logout_Url, MyPage_Url, StoreCreate_Url } from '../Commons/PathUrl'
+import LoginCheck from '../Commons/IsLogin'
 import styled from "styled-components";
 
-function Header(props) {
-    const [IsLogin, setlogin] = useState(false);
+function Header() {
+    const [IsLogin, setlogin] = useState(LoginCheck());    
+    const navi = useNavigate();    
 
-    useEffect(() => {        
-        setlogin(isLogin);
-    });
-
-    const navi = useNavigate();
-
+    const Logout = () => {    
+        localStorage.removeItem("user");
+        navi("/");
+    }
     const Route_Btn_Click = (url) => {
         navi(url);
     }
+    
+    useEffect(() => {
+        if (LoginCheck()){
+            setlogin(true)
+        }
+        else{
+            setlogin(false)
+        }
+    });
+    
+
 
     return (
         <>
@@ -26,9 +36,9 @@ function Header(props) {
 
                 {IsLogin ?
                 <RouteBox>
-                    <RouteBtn onClick={Route_Btn_Click(StoreCreate_Url)}>상점 등록</RouteBtn>
-                    <RouteBtn onClick={Route_Btn_Click(StoreCreate_Url)} >Sign Out</RouteBtn>
-                    <RouteBtn onClick={Route_Btn_Click(MyPage_Url)}>My</RouteBtn>
+                    <RouteBtn onClick={() => Route_Btn_Click(StoreCreate_Url)}>상점 등록</RouteBtn>
+                    <RouteBtn onClick={() => Logout()} >Sign Out</RouteBtn>
+                    <RouteBtn onClick={() => Route_Btn_Click(MyPage_Url)}>My</RouteBtn>
                 </RouteBox>
                 :
                 null}

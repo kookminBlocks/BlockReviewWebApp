@@ -3,19 +3,19 @@ import { useState, useEffect } from 'react';
 import { GetStores }  from  '../../api/store'
 
 
-function AddStore() {
+function StoreList() {
     const [stores, storeChanged] = useState([])    
     
-    useEffect(() => {
-        const res = await GetStores();
-        if (res.status == 200)
-        {
-            storeChanged(res.data)
-        }
-        else{
+    // useEffect(async () => {
+    //     const res = await GetStores();
+    //     if (res.status == 200)
+    //     {
+    //         storeChanged(res.data)
+    //     }
+    //     else{
             
-        }
-    },[])    
+    //     }
+    // },[])    
 
 
     return (
@@ -54,5 +54,5 @@ function CardItem(props){
 
 
 
-export default AddStore;
+export default StoreList;
 

@@ -1,11 +1,11 @@
-import { Navigate, Route, Routes } from "react-router-dom";
+import LoginCheck from './IsLogin'
+import { Navigate } from "react-router-dom";
 
 const PrivateRoute = ({
-    isLogin,
     redirectPath = '/',
     children,
   }) => {
-    if (!isLogin) {
+    if (!LoginCheck()) {
       return <Navigate to={redirectPath} replace />;
     }
   

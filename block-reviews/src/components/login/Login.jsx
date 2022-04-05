@@ -1,8 +1,9 @@
 import '../../scss/Login.scss'
 import { Link } from "react-router-dom";
-import {useState} from 'react';
-import { Navigate, useNavigate } from "react-router-dom";
+import { useState } from 'react';
+import { Navigate, useNavigate, usehistory } from "react-router-dom";
 import { LoginAPICall }  from  '../../api/user'
+import { Register_Url } from '../Commons/PathUrl'
 
 function Login() {            
     const navigate = useNavigate();
@@ -34,21 +35,27 @@ function Login() {
                 const csvOutput = event.target.result;
                 // 월렛 파일
                 var file1 = csvOutput.split('\n');
-                var keys = file1[1].split(',')
+                var keys = file1[1].split(',')                                
                 
-                userinfo.PublicKey = keys[0]
-                userinfo.PrivateKey = keys[1]
+                userinfo.PublicKey = keys[0].replace('\r','');
+                userinfo.PrivateKey = keys[1].replace('\r','');
                 // console.log(userinfo.PrivateKey)
                 // console.log(userinfo.PublicKey)
 
                 const res = await LoginAPICall(userinfo);
-                console.log(res)
-                if (res.status == 200) {
-                    localStorage.setItem('user', res.data)
-                    navigate("/store/list");
+                
+                if (!res){
+                    alert('api 오류입니다.');
                 }
-                else {
-                    alert('아이디 혹은 비밀번호가 확인되지 않습니다.')
+                else{
+                    if (res.status == 200) {
+                        localStorage.setItem('user', JSON.stringify(res.data))                    
+                        navigate('/store/list');
+                        // this.props.IsLogin()
+                    }
+                    else {
+                        alert('아이디 혹은 비밀번호가 확인되지 않습니다.')
+                    }   
                 }
             };
             fileReader.readAsText(WalletFile);                                   
@@ -85,7 +92,7 @@ function Login() {
                 </div>    
                 <div className='d-flex justify-content-center'>
                     <button className='btn btn-primary m-2' onClick={Btn_Login_Click}>로그인</button>
-                    <Link to="Register">
+                    <Link to={Register_Url}>
                         <button className='btn btn-secondary m-2'>회원가입</button>
                     </Link>
                 </div>
