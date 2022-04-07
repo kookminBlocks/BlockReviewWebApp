@@ -9,7 +9,7 @@ export const CreateStore = async (store) => {
         Id: uuidv4(),
         UserId: store.UserId,
         CategoryId : store.CategoryId,
-        ThumbNail : store.Email,
+        ThumbNail : store.ThumbNail,
         Name : store.Name,
         Description : store.Description,        
         Phone : store.Phone,        

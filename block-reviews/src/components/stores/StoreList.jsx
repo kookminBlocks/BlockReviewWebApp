@@ -1,21 +1,23 @@
 import '../../scss/Login.scss'
 import { useState, useEffect } from 'react';
 import { GetStores }  from  '../../api/store'
+import { useNavigate } from "react-router-dom";
 
 
 function StoreList() {
     const [stores, storeChanged] = useState([])    
     
-    // useEffect(async () => {
-    //     const res = await GetStores();
-    //     if (res.status == 200)
-    //     {
-    //         storeChanged(res.data)
-    //     }
-    //     else{
+    useEffect(async () => {
+        const res = await GetStores();
+        if (res.status == 200)
+        {
+            console.log(res.data)
+            storeChanged(res.data)
+        }
+        else{
             
-    //     }
-    // },[])    
+        }
+    },[])    
 
 
     return (
@@ -41,12 +43,18 @@ function StoreList() {
 }
 
 function CardItem(props){
+    const navigate = useNavigate();
+
+    const Btn_Click_Card = (e) => {
+        navigate('/store/detail' + e);
+    }
+
     return(
-        <div class="card" style="width: 18rem;">
-            <img class="card-img-top" src={props.store.ThumbNail} alt="스토어 이미지"/>
-            <div class="card-body">
-                <h5 class="card-title">{props.store.NAME}</h5>
-                <p class="card-text">{props.store.Description}</p>                
+        <div className="card" onClick={() => Btn_Click_Card(props.store.id)}>
+            <img className="card-img-top" src={props.store.ThumbNail} alt="스토어 이미지"/>
+            <div className="card-body">
+                <h5 className="card-title">{props.store.name}</h5>
+                <p className="card-text">{props.store.description}</p>                
             </div>
         </div>        
     )

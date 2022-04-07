@@ -2,7 +2,8 @@ import '../../scss/Login.scss'
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from 'react';
 import { CreateStore }  from  '../../api/store'
-import { GetCategory }  from  '../../api/category'
+import { UploadFile }  from  '../../api/uploader'
+import { GetByLevel, GetByParentId }  from  '../../api/category'
 
 function AddStore() {
     const navigate = useNavigate();
@@ -13,36 +14,59 @@ function AddStore() {
     var [storeDesc, DescChanged] = useState(null);
     var [storeCate1, Cate1Changed] = useState(null);
     var [storeCate2, Cate2Changed] = useState(null);
-    var [storeTumbNail, TumbNailChange] = useState(null);
+    var [storeTumbNail, ThumbURL] = useState('aa');
     var [buisnessNum, buisnessNumChanged] = useState(null);
     var [storePhone, PhoneChanged] = useState(null);
     var [location, locationChanged] = useState(null);
     
-    const CateLevel1List = []
+    const [CateLevel1List, SetCate1] = useState([])
     
-    const CateLevel2List = []     
+    const [CateLevel2List, SetCate2] = useState([])
 
     useEffect(async () => {
-        var res = await GetCategory(1, null);
+        var res = await GetByLevel(1);
         if (res.status == 200){
-            console.log(res.data);
+            SetCate1(res.data)
+            console.log(CateLevel1List)
         }
     },[]);
 
+    const cbx_cate1_changed = async (e) => {
+        Cate1Changed(e);
+
+        const res = await GetByParentId(e);
+        if (res.status == 200){
+            SetCate2(res.data);
+        }
+        else
+        {
+            SetCate2(null);
+        }
+    }
+
     const onImageChanged = (e) => {
         e.preventDefault();
-        const formData = new FormData();
-        formData.append('file', e.target.files[0]);
-        TumbNailChange(formData);
+        const formData = new FileReader();        
+        const file = e.target.files[0];
+        formData.onloadend = () => {
+            TumbNailChanged(formData.result );
+        };
+        formData.readAsDataURL(file);
+        
+        const res = UploadFile(file);        
+        if(res.status == 200){
+            ThumbURL('http://3.35.203.53/')
+        }
+        // TumbNailChanged(formData);
     }
 
     const Btn_Create_Click = async () => {
-        const user = localStorage.getItem('user');
-
+        const user = JSON.parse(localStorage.getItem('user'));
+        
         const inputStore = {
-            UserId : user.Id,
+            UserId : user.id,            
             CategoryId: storeCate2,
-            ThumbNail:storeTumbNail,
+            ThumbNail:'testsets',
             Name: storeTitle,
             Description: storeDesc,
             Phone: storePhone,
@@ -85,7 +109,7 @@ function AddStore() {
                     <img
                     alt="sample"
                     src={storeTumb}
-                    style={{ margin: "auto" }}
+                    style={{ margin: "auto", width: "100px", height: "100px" }}
                   />
                     <input type={'file'} accept='image/*' name='file' onChange={onImageChanged}/>
                 </div>
@@ -120,11 +144,25 @@ function AddStore() {
                     업종
                 </div>
                 <div>
-                    <select style={{width:"300px"}} onChange={(e) => { Cate1Changed(e.target.value)}} class="form-select" id="validationCustom04" required>
-                            <option disabled value={-1}>업종을 선택해주세요</option>                         
+                    <select defaultValue={-1} style={{width:"300px"}} onChange={(e) => { cbx_cate1_changed(e.target.value)}} className="form-select mb-1" id="validationCustom04" required>
+                        <option value={-1}>업종을 선택해주세요</option>                         
+                        {
+                            CateLevel1List.map((e, key) => {
+                                return(
+                                    <option value={e.id}>{e.title}</option>
+                                )
+                            })
+                        }
                     </select>  
-                    <select style={{width:"300px"}} onChange={(e) => { Cate2Changed(e.target.value)}} class="form-select" id="validationCustom04" required>
-                            <option disabled value={-1}>상세 업종을 선택해주세요</option>                         
+                    <select defaultValue={-1} style={{width:"300px"}} onChange={(e) => { Cate2Changed(e.target.value)}} className="form-select" id="validationCustom04" required>
+                            <option value={-1}>상세 업종을 선택해주세요</option>                         
+                            {
+                                CateLevel2List.map((e, key) => {
+                                    return(
+                                        <option value={e.id}>{e.title}</option>
+                                    )
+                                })
+                            }
                     </select>  
                 </div>
             </div>    
