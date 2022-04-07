@@ -1,8 +1,8 @@
 import '../../scss/Login.scss'
-import {useState} from 'react';
-import { Form, Container, Button} from 'react-bootstrap'
-import { Link } from "react-router-dom";
-import { IdCheck } from "../../api/login"
+import { useState } from 'react';
+import { Navigate, useNavigate } from "react-router-dom";
+import { RegisterAPICall } from  '../../api/user'
+
 
 const errorMsg = {
     'empty' : '메일 주소를 입력해주세요',
@@ -10,14 +10,37 @@ const errorMsg = {
 }
 
 function Register(){       
-    let [Id, IdChanged] = useState(null) 
-    let [Pwd, PwdChanged] = useState(null) 
-    let [Email, EmailChanged] = useState(null) 
-    let [Phone, PhoneChanged] = useState(null) 
-    let [UserType, UserTypeChanged] = useState(-1) 
+    const navigate = useNavigate();
 
-    const Btn_Register_Click = () => {
-        
+    let [Id, IdChanged] = useState(null);
+    let [Pwd, PwdChanged] = useState(null);
+    let [NickName, NameChanged] = useState(null);
+    let [Email, EmailChanged] = useState(null); 
+    let [Phone, PhoneChanged] = useState(null);
+    let [UserType, UserTypeChanged] = useState(-1);
+
+    const Btn_Register_Click = async () => {  
+        var userinfo = {
+            Id: Id,
+            Pwd: Pwd,
+            NickName: NickName,
+            Email: Email,
+            UserType: UserType,
+            Phone: Phone
+        }
+
+        const res = await RegisterAPICall(userinfo);
+             
+        if (res.status == 200) {                
+            const url = window.URL.createObjectURL(new Blob([res.data]));
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download', userinfo.Id+ '_account'+'.csv'); 
+            document.body.appendChild(link);
+            link.click();   
+            alert('csv 파일은 로그인 시 필요합니다 반드시 저장해주세요')
+            navigate('/')                            
+        }
     }
 
     return(
@@ -38,6 +61,14 @@ function Register(){
                     </div>
                     <div>
                         <input style={{minWidth:"300px"}} className='form-control' placeholder='비밀번호를 입력해주세요' onChange={(e) => { PwdChanged(e.target.value) }} type={"password"} />
+                    </div>
+                </div>
+                <div className='d-flex align-items-center mb-3 mt-3'>
+                    <div style={{ width: "150px", marginRight: "5px" }}>
+                        닉네임
+                    </div>
+                    <div>
+                        <input style={{minWidth:"300px"}} className='form-control' placeholder='닉네임을 입력해주세요' onChange={(e) => { NameChanged(e.target.value) }} type={"text"} />
                     </div>
                 </div>
                 <div className='d-flex align-items-center  mb-3'>
@@ -61,8 +92,8 @@ function Register(){
                         사용자 타입
                     </div>
                     <div>
-                        <select style={{minWidth:"300px"}} onChange={(e) => { UserTypeChanged(e.target.value)}} class="form-select" id="validationCustom04" required>
-                            <option selected disabled value={-1}>사용자 타입을 선택해주세요</option>
+                        <select defaultValue={-1} style={{minWidth:"300px"}} onChange={(e) => {  UserTypeChanged(e.target.value);}} className="form-select" id="validationCustom04" required>
+                            <option disabled value={-1}>사용자 타입을 선택해주세요</option>
                             <option value={0}>일반 사용자</option>
                             <option value={1}>지점주</option>
                         </select>                        

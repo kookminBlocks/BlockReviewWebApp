@@ -1,30 +1,49 @@
-import React from 'react'
+import { React, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
+import { logout_Url, MyPage_Url, StoreCreate_Url } from '../Commons/PathUrl'
+import LoginCheck from '../Commons/IsLogin'
 import styled from "styled-components";
 
-function Header(props) {
-    const navi = useNavigate();
+function Header() {
+    const [IsLogin, setlogin] = useState(LoginCheck());    
+    const navi = useNavigate();    
 
-    const route = (e) => {
-        const routeTo = e.currentTarget.className.split(" ")[2];
-        navi(routeTo);
+    const Logout = () => {    
+        localStorage.removeItem("user");
+        navi("/");
     }
+    const Route_Btn_Click = (url) => {
+        navi(url);
+    }
+    
+    useEffect(() => {
+        if (LoginCheck()){
+            setlogin(true)
+        }
+        else{
+            setlogin(false)
+        }
+    });
+    
+
 
     return (
-        <HeaderComponent>
-            <Logo onClick={()=> navi("/")}>
-                <img src="https://swgs.kookmin.ac.kr/_res/kookmin/swgs/img/common/img-logo.png" alt="kookmin logo"/>
-            </Logo>
+        <>
+            <HeaderComponent>
+                <Logo onClick={() => navi("/")}>
+                    <img src="https://swgs.kookmin.ac.kr/_res/kookmin/swgs/img/common/img-logo.png" alt="kookmin logo" />
+                </Logo>
 
-            <RouteBox>
-                <RouteBtn onClick={route} className="/review/write">리뷰작성</RouteBtn>
-                <RouteBtn onClick={route} className="/store">상점등록하기</RouteBtn>
-                <RouteBtn onClick={route} className="/register">회원가입</RouteBtn>
-                <RouteBtn onClick={route} className={`/my/:userId`}>My</RouteBtn>
-                <RouteBtn onClick={route} className="/register">LOG-IN</RouteBtn>
-            </RouteBox>
-
-        </HeaderComponent>
+                {IsLogin ?
+                <RouteBox>
+                    <RouteBtn onClick={() => Route_Btn_Click(StoreCreate_Url)}>상점 등록</RouteBtn>
+                    <RouteBtn onClick={() => Logout()} >Sign Out</RouteBtn>
+                    <RouteBtn onClick={() => Route_Btn_Click(MyPage_Url)}>My</RouteBtn>
+                </RouteBox>
+                :
+                null}
+            </HeaderComponent>
+        </>
     )
 }
 
