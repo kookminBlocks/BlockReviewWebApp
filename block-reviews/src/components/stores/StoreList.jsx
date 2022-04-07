@@ -1,10 +1,11 @@
+import React from "react";
 import '../../scss/Login.scss'
 import { useState, useEffect } from 'react';
-import { GetStores }  from  '../../api/store'
+import { GetStores }  from  '../../api/store';
 
 
 function StoreList() {
-    const [stores, storeChanged] = useState([])    
+    const [stores, storeChaned] = useState([])    
     
     // useEffect(async () => {
     //     const res = await GetStores();
@@ -14,7 +15,7 @@ function StoreList() {
     //     }
     //     else{
             
-    //     }
+    //     
     // },[])    
 
 
@@ -38,7 +39,7 @@ function StoreList() {
             }
         </>
     )
-}
+        }  
 
 function CardItem(props){
     return(

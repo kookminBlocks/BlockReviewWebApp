@@ -7,19 +7,19 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Login from './components/login/Login';
 import Register from './components/login/Register';
 import My from "./components/user/My";
-import AddStore from "./components/stores/AddStore";
+import AddStore from "./components/Stores/AddStore";
 import Header from "./components/Header/Header";
 //#endregion
 // #region location
 import './App.css';
 import LoginCheck from './components/Commons/IsLogin'
-import { login_Url,logout_Url , MyPage_Url, Register_Url, StoreList_Url, StoreCreate_Url } from './components/Commons/PathUrl'
+import { WriteReview_Url, login_Url,logout_Url , MyPage_Url, Register_Url, StoreList_Url, StoreCreate_Url } from './components/Commons/PathUrl'
 import PrivateRoute from "./components/Commons/PrivateRoute";
 import PublicRoute from "./components/Commons/PublicRoute";
-import StoreList from "./components/stores/StoreList";
+import StoreList from "./components/Stores/StoreList";
+import WriteReview from "./components/review/WriteReview";
+
 //#endregion
-
-
 function App() {
   const [user, setUser] = useState(null)
 
@@ -34,7 +34,6 @@ function App() {
   })
 
   return (
-
     <div className='App'>
       <Header />
       <div className='block-review-banner'>
@@ -50,23 +49,27 @@ function App() {
           <PublicRoute>
             <Register />
           </PublicRoute>}>          
-        </Route>       
-
+        </Route>
         <Route path={StoreList_Url} element={
           <PrivateRoute>
             <StoreList />
-          </PrivateRoute>}>          
+          </PrivateRoute>}>
         </Route>   
         <Route path={StoreCreate_Url} element={
           <PrivateRoute>
             <AddStore />
-          </PrivateRoute>}>          
+          </PrivateRoute>}>
         </Route>  
         <Route path={MyPage_Url} element={
           <PrivateRoute>
             <My />
-          </PrivateRoute>}>          
-        </Route>  
+          </PrivateRoute>}>
+        </Route>
+        <Route path={WriteReview_Url} element={
+          <PrivateRoute>
+            <WriteReview />
+          </PrivateRoute>}>
+        </Route>
         {/* <Route path={logout_Url} element={
           <PrivateRoute isLogin={isLogin}>
             <Logout />
