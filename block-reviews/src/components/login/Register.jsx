@@ -2,6 +2,7 @@ import '../../scss/Login.scss'
 import { useState } from 'react';
 import { Navigate, useNavigate } from "react-router-dom";
 import { RegisterAPICall } from  '../../api/user'
+import Spinner from "../Utils/Spinner";
 
 
 const errorMsg = {
@@ -18,8 +19,10 @@ function Register(){
     let [Email, EmailChanged] = useState(null); 
     let [Phone, PhoneChanged] = useState(null);
     let [UserType, UserTypeChanged] = useState(-1);
+    const [SpinnerFlag, setSpinnerFlag] = useState(false);
 
     const Btn_Register_Click = async () => {  
+        setSpinnerFlag(true);
         var userinfo = {
             Id: Id,
             Pwd: Pwd,
@@ -41,11 +44,17 @@ function Register(){
             alert('csv 파일은 로그인 시 필요합니다 반드시 저장해주세요')
             navigate('/')                            
         }
+        setSpinnerFlag(false);
     }
 
     return(
         <div className='Register-Layout'>
-                <div className='content-layout'>
+            {SpinnerFlag ?
+                <div style={{ width: "100%", height: "60vh", display: "flex", justifyContent: "center", alignItems: "center" }}>
+                    <Spinner /> 
+                </div>
+            :
+            <div className='content-layout'>
                 <h2>회원 가입</h2>
                 <div className='d-flex align-items-center mb-3 mt-3'>
                     <div style={{ width: "150px", marginRight: "5px" }}>
@@ -103,6 +112,9 @@ function Register(){
                     <button className='btn btn-primary m-2' onClick={Btn_Register_Click}>회원가입</button>                    
                 </div>
             </div>
+            }
+
+                
         </div>
         
     )

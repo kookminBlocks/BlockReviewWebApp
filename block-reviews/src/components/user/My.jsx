@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from "styled-components";
+import Spinner from "../Utils/Spinner";
 import UserForm from "./sections/UserForm__My";
 import ReviewForm from "./sections/ReviewForm__My";
 
@@ -23,6 +24,7 @@ function My(props) {
 
     return (
         <BigContainer>
+            <Spinner />
             {/* USER DATA */}
             {UserInfo &&
                 <UserForm user={UserInfo} />

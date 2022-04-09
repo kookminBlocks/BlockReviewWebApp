@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 
 function StoreList() {
-    const [stores, storeChaned] = useState([])    
+    const [stores, storeChanged] = useState([])    
     
     useEffect(async () => {
         const res = await GetStores();
