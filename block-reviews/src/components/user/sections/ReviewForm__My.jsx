@@ -19,7 +19,7 @@ function ReviewForm(props) {
 
                 {props.review.length > 0 ?
                     props.review.map((item, idx)=> (
-                        <Tbody>
+                        <Tbody key={idx}>
                             <>
                                 <Tbody_div>{item.idx}</Tbody_div>
                                 <Tbody_div>{item.title}</Tbody_div>

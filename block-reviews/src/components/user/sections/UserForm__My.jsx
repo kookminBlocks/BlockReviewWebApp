@@ -2,7 +2,6 @@ import React from 'react'
 import styled from 'styled-components';
 
 function UserForm__My(props) {
-
     const logout = () => {
         console.log("로그아웃");
     }
@@ -12,19 +11,19 @@ function UserForm__My(props) {
             <UserForm>
                 <UserInfoBox>
                     <UserInfo_Label>Address : </UserInfo_Label>
-                    <UserInfo_Content>Account Public Key</UserInfo_Content>
+                    <UserInfo_Content>{props.user.accountPublicKey}</UserInfo_Content>
                 </UserInfoBox>
                 <UserInfoBox>
                     <UserInfo_Label>Email : </UserInfo_Label>
-                    <UserInfo_Content>User Email</UserInfo_Content>
+                    <UserInfo_Content>{props.user.email}</UserInfo_Content>
                 </UserInfoBox>
                 <UserInfoBox>
                     <UserInfo_Label>NickName : </UserInfo_Label>
-                    <UserInfo_Content>User Nickname</UserInfo_Content>
+                    <UserInfo_Content>{props.user.name}</UserInfo_Content>
                 </UserInfoBox>
                 <UserInfoBox>
                     <UserInfo_Label>Phone : </UserInfo_Label>
-                    <UserInfo_Content>User Phone Number</UserInfo_Content>
+                    <UserInfo_Content>{props.user.phone}</UserInfo_Content>
                 </UserInfoBox>
                 <UserInfoBox>
                     <UserInfo_Label>BRC : </UserInfo_Label>
