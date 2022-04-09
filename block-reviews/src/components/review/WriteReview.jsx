@@ -1,39 +1,82 @@
-import React, {useState, useEffect } from 'react'
+import React, {useState, useEffect } from 'react';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
+import { CreateReview } from "../../api/review";
 
 function WriteReview(props) {
     const [Title_Input, setTitle_Input] = useState("");
     const [Description_Input, setDescription_Input] = useState("");
-    
+    const [ImgUrl, setImgUrl] = useState("");
+    const [WalletFile, FileChanged] = useState(null);
+    const navi = useNavigate();
+
     //작성버튼
-    const handleSubmit = (e) => {
-        console.log("작성완료");
+    const handleSubmit = async(e) => {
+        // 유저정보읽기 
+        let user = JSON.parse(localStorage.getItem('user'));
+        const payload = {
+            UserId: user.id,
+            CategoryId: "c468c561-a65d-11ec-90a3-02005c5fdd88",
+            StoreId: "test",
+            Title: Title_Input,
+            Content: Description_Input,
+            User: {
+                AccoutPrivateKey: user.AccoutPrivateKey,
+                AccountPublicKey: user.AccountPublicKey
+            }
+        }
+        console.log(payload);
+
+        const result = await CreateReview(payload);
+        console.log(result);
     };
     
     //취소버튼
     const handleCancel = (e) => {
         if(window.confirm("취소된 글은 저장되지 않습니다. 계속하시겠습니까?") === true) {
             console.log(`페이지 벗어나기`);
+            navi(-1);
         }
     };
-        
+
+    // Img S3
+    const handleImg = async (e) => {
+        const img = e.target.files[0];
+        if(img){
+            console.log(img);
+        }
+    }
+
     return (
        <Form>
         <Title>리뷰작성</Title>
 
-
        <TitleInput type="text" placeholder="Title" value={Title_Input} onChange={e => setTitle_Input(e.currentTarget.value)} />
        <DescriptionTextarea placeholder="Description" value={Description_Input} onChange={e => setDescription_Input(e.currentTarget.value)} />
+       <UploadBox>
+            <Label>대표이미지 설정 :</Label>
+            <input type="file" onChange={handleImg} />
+            {ImgUrl &&
+                ImgUrl ?
+                    <ImgBox>
+                        <Img src={ImgUrl} />
+                    </ImgBox>
+                    :
+                    <>
+                    </>
+            }
+        </UploadBox>
 
-       <FunctionBtnBox>
-           <Btn onClick={handleCancel}>취소</Btn>
-           <Btn onClick={handleSubmit}>확인</Btn>
-       </FunctionBtnBox>
+        <FunctionBtnBox>
+            <Btn onClick={handleCancel}>취소</Btn>
+            <Btn onClick={handleSubmit}>확인</Btn>
+        </FunctionBtnBox>
        </Form>
     )
 }
 
 export default WriteReview;
+
 
 const Form = styled.div`
     display:flex;
@@ -84,4 +127,27 @@ const Btn = styled.button`
         cursor: pointer;
         background-color: ghostwhite;
     }
+`;
+
+const UploadBox = styled.div`
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    margin: 15px 0px;
+`;
+
+const Label = styled.label`
+    font-weight: 600;
+    margin-right: 15px;
+`;
+
+const Img = styled.img`
+    width: 100%;
+`;
+
+const ImgBox = styled.div`
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    overflow: hidden;
 `;
