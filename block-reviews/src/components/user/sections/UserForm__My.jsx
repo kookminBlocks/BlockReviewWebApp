@@ -7,7 +7,7 @@ function UserForm__My(props) {
     }
     return (
         <>
-        <h1>내 정보</h1>
+        <h1 style={{ fontWeight: "800" }}>내 정보</h1>
             <UserForm>
                 <UserInfoBox>
                     <UserInfo_Label>Address : </UserInfo_Label>

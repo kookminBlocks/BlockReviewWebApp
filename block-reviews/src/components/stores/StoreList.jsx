@@ -31,7 +31,7 @@ function StoreList() {
                     {
                         stores.map((item, idx) => {
                             return(
-                                <CardItem store={item}/>
+                                <CardItem key={idx} store={item}/>
                             )
                         })
                     }

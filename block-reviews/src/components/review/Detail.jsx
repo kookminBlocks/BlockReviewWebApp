@@ -31,7 +31,6 @@ function Detail(props) {
                 <button>좋아요👍</button>
                 <button>구매하기</button>
             </div>
-
         </div>
     )
 }

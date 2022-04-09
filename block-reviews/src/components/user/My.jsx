@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import styled from "styled-components";
-import Spinner from "../Utils/Spinner";
 import UserForm from "./sections/UserForm__My";
 import ReviewForm from "./sections/ReviewForm__My";
 
@@ -22,9 +21,15 @@ function My(props) {
         // console.log(web3.eth.getBalance(user.accountPublicKey));
     }, []);
 
+    const handleFaucet = () => {
+        console.log("FauCET API");
+    }
+
     return (
         <BigContainer>
-            <Spinner />
+            <>
+                <FaucetBtn onClick={handleFaucet}>🚰 수도꼭지</FaucetBtn>
+            </>
             {/* USER DATA */}
             {UserInfo &&
                 <UserForm user={UserInfo} />
@@ -46,3 +51,16 @@ const BigContainer = styled.div`
     align-items: center;
     padding: 50px;
 `
+
+const FaucetBtn = styled.button`
+    border-radius: 25px;
+    background-color: white;
+    border: 1px solid lightgray;
+    font-size: 22px;
+    padding: 25px;
+    margin-bottom: 1em;
+    :hover{
+        background-color: whitesmoke;
+        cursor: pointer;
+    }
+`;

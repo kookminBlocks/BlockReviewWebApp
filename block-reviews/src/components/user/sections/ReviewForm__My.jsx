@@ -4,7 +4,7 @@ import styled from "styled-components";
 function ReviewForm(props) {
     return (
             <Container>
-            <h1 style={{ textAlign: "center"}}>나의 리뷰</h1>
+            <h1 style={{ textAlign: "center", fontWeight: "800" }}>나의 리뷰</h1>
                 <Table>
                     {/* Head */}
                     <Thead>
