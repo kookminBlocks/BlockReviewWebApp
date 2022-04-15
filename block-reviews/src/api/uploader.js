@@ -15,3 +15,8 @@ export const UploadFile = async (file) => {
     });
     return res;
 }
+
+
+export const ReturnFileBaseUrl = async () => {
+    return 'http://3.35.203.53/images'
+}

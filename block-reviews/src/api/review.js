@@ -11,8 +11,8 @@ export const CreateReview = async (review) => {
         Content:review.Content,
         User: {
             Id: review.UserId,
-            AccountPrivateKey: review.User.AccoutPrivateKey,
-            AccountPublicKey: review.User.AccountPublicKey
+            AccountPublicKey: review.User.AccountPublicKey,
+            AccountPrivateKey: review.User.AccountPrivateKey,            
         }
     })       
     .catch(function(e) {
@@ -20,6 +20,8 @@ export const CreateReview = async (review) => {
     });
     return res;
 }
+
+
 
 
 export const GetReviewByStore = async (storeId) => {
