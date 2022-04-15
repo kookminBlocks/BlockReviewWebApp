@@ -10,6 +10,7 @@ export const CreateReview = async (review) => {
         Title:review.Title,
         Content:review.Content,
         ThumbNail:review.ThumbNail,
+        NftUrl: review.NftUrl,
         User: {
             Id: review.UserId,
             AccountPublicKey: review.User.AccountPublicKey,
