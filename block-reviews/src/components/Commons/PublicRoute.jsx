@@ -7,7 +7,7 @@ const PublicRoute = ({
   }) => {
     if (LoginCheck()) {
       return <Navigate to={redirectPath} replace />;
-    }
+    }    
   
     return children ? children : null;
   };
