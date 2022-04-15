@@ -29,6 +29,7 @@ function WriteReview(props) {
                 AccountPublicKey: user.accountPublicKey
             }
         }
+        console.log(payload);
         const result = await CreateReview(payload);
         console.log(result);
         setSpinnerFlag(false);

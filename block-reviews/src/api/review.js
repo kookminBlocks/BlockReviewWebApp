@@ -17,8 +17,6 @@ export const CreateReview = async (review) => {
     })       
     .catch(function(e) {
         console.log(e.response)
-        console.log(res);
-        console.log(res.data);
     });
     return res;
 }
