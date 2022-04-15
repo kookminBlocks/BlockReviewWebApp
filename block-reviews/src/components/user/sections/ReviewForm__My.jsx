@@ -17,24 +17,25 @@ function ReviewForm(props) {
                         <Thead_div>판매철회</Thead_div>
                     </Thead>
 
-                {props.review.length > 0 ?
-                    props.review.map((item, idx)=> (
-                        <Tbody key={idx}>
-                            <>
-                                <Tbody_div>{item.idx}</Tbody_div>
-                                <Tbody_div>{item.title}</Tbody_div>
-                                <Tbody_div>0</Tbody_div>
-                                <Tbody_div>{item.price ? item.price:"미판매"}</Tbody_div>
-                                <Tbody_div>(liked * 100) * 0.8)</Tbody_div>
-                                <Tbody_div>
-                                    <FunctionalBtn>등록</FunctionalBtn>
-                                </Tbody_div>
-                                <Tbody_div>
-                                    <FunctionalBtn>철회</FunctionalBtn>
-                                </Tbody_div>
-                            </>
-                        </Tbody>
-                    ))
+                {props.review &&
+                    props.review.length > 0 ?
+                        props.review.map((item, idx)=> (
+                            <Tbody key={idx}>
+                                <>
+                                    <Tbody_div>{item.id}</Tbody_div>
+                                    <Tbody_div>{item.title}</Tbody_div>
+                                    <Tbody_div>{item.likeUser ? item.likeUser.length : "0"}</Tbody_div>
+                                    <Tbody_div>{item.price ? item.price : "미판매"}</Tbody_div>
+                                    <Tbody_div>{item.likeUser ? (item.likedUser.length * 100) * 0.8 : "0"}</Tbody_div>
+                                    <Tbody_div>
+                                        <FunctionalBtn>등록</FunctionalBtn>
+                                    </Tbody_div>
+                                    <Tbody_div>
+                                        <FunctionalBtn>철회</FunctionalBtn>
+                                    </Tbody_div>
+                                </>
+                            </Tbody>
+                        ))
                 :
                 <div style={{width: "100%", height: "100%", display: "flex", justifyContent: "center", alignItems: "center"}}>
                     <div>작성된 리뷰가 없습니다.</div>

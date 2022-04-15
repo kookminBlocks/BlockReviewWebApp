@@ -1,5 +1,5 @@
 import '../../scss/Login.scss'
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect } from 'react';
 import styled from "styled-components";
 import StoreReview from "./sections/StoreReview";
@@ -7,6 +7,8 @@ import { GetReviewByStore } from "../../api/review"
 import { GetStoreById } from "../../api/store"
 
 function DetailStore(props) {
+    const navi = useNavigate();
+
     const { storeId } = useParams();
     const [ store, storeChanged ] = useState(null);
     const [ReviewData, setReviewData] = useState(null);
@@ -38,6 +40,9 @@ function DetailStore(props) {
 
                 {/* 이곳에 리뷰 등록 폼 / 조회 리스트 쭈욱~ */}
             </div>
+            <button onClick={() => {
+                navi(`/review/write/${storeId}`);
+            }}>글쓰기</button>
             <StoreReview review={ReviewData} />
         </div>
     )
