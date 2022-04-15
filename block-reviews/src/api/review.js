@@ -24,7 +24,6 @@ export const CreateReview = async (review) => {
 }
 
 
-
 export const GetReviewByStore = async (storeId) => {
     console.log(storeId)
     try {

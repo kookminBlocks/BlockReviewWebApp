@@ -4,7 +4,7 @@ import { Navigate } from "react-router-dom";
 const PrivateRoute = ({
     redirectPath = '/',
     children,
-  }) => {
+  }) => {    
     if (!LoginCheck()) {
       return <Navigate to={redirectPath} replace />;
     }

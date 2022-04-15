@@ -14,7 +14,10 @@ function AddStore() {
     var [storeDesc, DescChanged] = useState(null);
     var [storeCate1, Cate1Changed] = useState(null);
     var [storeCate2, Cate2Changed] = useState(null);
-    var [storeTumbNail, ThumbURL] = useState('aa');
+    var [storeTumbNail, ThumbURL] = useState('Nothing');
+
+    // api에 보낼 이미지
+    var [thumbNailFile, thumbChanged] = useState(null);
     var [buisnessNum, buisnessNumChanged] = useState(null);
     var [storePhone, PhoneChanged] = useState(null);
     var [location, locationChanged] = useState(null);
@@ -44,19 +47,27 @@ function AddStore() {
         }
     }
 
-    const onImageChanged = (e) => {
+    const onImageChanged = async (e) => {
         e.preventDefault();
-        const formData = new FileReader();        
-        const file = e.target.files[0];
-        formData.onloadend = () => {
-            TumbNailChanged(formData.result );
-        };
-        formData.readAsDataURL(file);
+        const formData = new FileReader();               
         
-        const res = UploadFile(file);        
-        if(res.status == 200){
-            ThumbURL('http://3.35.203.53/')
+        // api 호출
+        const file = e.target.files[0];                                
+        thumbChanged(file);
+        const res = await UploadFile(file);        
+        console.log(res);
+
+        if(res.status == 200){            
+            console.log(res);
+            ThumbURL(res.data)
         }
+
+        // 미리보기
+        formData.onloadend = () => {
+            TumbNailChanged(formData.result);
+        };
+        formData.readAsDataURL(file);        
+      
         // TumbNailChanged(formData);
     }
 
@@ -66,7 +77,7 @@ function AddStore() {
         const inputStore = {
             UserId : user.id,            
             CategoryId: storeCate2,
-            ThumbNail:'testsets',
+            ThumbNail:storeTumbNail,
             Name: storeTitle,
             Description: storeDesc,
             Phone: storePhone,
