@@ -17,6 +17,4 @@ export const UploadFile = async (file) => {
 }
 
 
-export const ReturnFileBaseUrl = async () => {
-    return 'http://3.35.203.53/images'
-}
+export const ReturnFileBaseUrl = 'http://3.35.203.53/images/'

@@ -9,6 +9,7 @@ export const CreateReview = async (review) => {
         StoreId:review.StoreId,
         Title:review.Title,
         Content:review.Content,
+        ThumbNail:review.ThumbNail,
         User: {
             Id: review.UserId,
             AccountPublicKey: review.User.AccountPublicKey,
