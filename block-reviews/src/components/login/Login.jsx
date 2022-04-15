@@ -50,8 +50,8 @@ function Login() {
                     alert('api 오류입니다.');
                 }
                 else{
-                    if (res.status == 200) {
-                        localStorage.setItem('user', JSON.stringify(res.data))                    
+                    if (res.status == 200) {                        
+                        localStorage.setItem('user', JSON.stringify(res.data));                    
                         navigate('/store/list');
                         // this.props.IsLogin()
                     }

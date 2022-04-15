@@ -10,6 +10,7 @@ function StoreList() {
         const res = await GetStores();
         if (res.status == 200)
         {
+            console.log(res.data);
             storeChanged(res.data)
         }
         else{
@@ -50,7 +51,7 @@ function CardItem(props){
 
     return(
         <div className="card" onClick={() => Btn_Click_Card(props.store.id)}>
-            <img className="card-img-top" src={props.store.ThumbNail} alt="스토어 이미지"/>
+            <img className="card-img-top" src={props.store.thumbNail} alt="스토어 이미지"/>
             <div className="card-body">
                 <h5 className="card-title">{props.store.name}</h5>
                 <p className="card-text">{props.store.description}</p>                

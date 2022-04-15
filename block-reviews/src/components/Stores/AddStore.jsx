@@ -2,7 +2,7 @@ import '../../scss/Login.scss'
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from 'react';
 import { CreateStore }  from  '../../api/store'
-import { UploadFile }  from  '../../api/uploader'
+import { UploadFile, ReturnFileBaseUrl }  from  '../../api/uploader'
 import { GetByLevel, GetByParentId }  from  '../../api/category'
 
 function AddStore() {
@@ -17,7 +17,6 @@ function AddStore() {
     var [storeTumbNail, ThumbURL] = useState('Nothing');
 
     // api에 보낼 이미지
-    var [thumbNailFile, thumbChanged] = useState(null);
     var [buisnessNum, buisnessNumChanged] = useState(null);
     var [storePhone, PhoneChanged] = useState(null);
     var [location, locationChanged] = useState(null);
@@ -53,13 +52,12 @@ function AddStore() {
         
         // api 호출
         const file = e.target.files[0];                                
-        thumbChanged(file);
         const res = await UploadFile(file);        
         console.log(res);
 
         if(res.status == 200){            
             console.log(res);
-            ThumbURL(res.data)
+            ThumbURL(ReturnFileBaseUrl + res.data)
         }
 
         // 미리보기

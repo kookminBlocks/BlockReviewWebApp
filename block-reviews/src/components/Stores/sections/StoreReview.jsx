@@ -3,6 +3,8 @@ import styled from "styled-components";
 
 function StoreReview(props) {
 
+    console.log(props.review);
+
     const route = (e) => {
         console.log(e.currentTarget);
         console.log(`NAVI TO item.id`)
@@ -15,6 +17,7 @@ function StoreReview(props) {
                     <Thead>
                         <Thead_tr>
                             <Thead_td>ID</Thead_td>
+                            <Thead_td>썸네일</Thead_td>                            
                             <Thead_td>Title</Thead_td>
                             <Thead_td>Description</Thead_td>
                             <Thead_td>liked</Thead_td>
@@ -24,9 +27,10 @@ function StoreReview(props) {
                     {/* BODY */}
                     <Tbody>
                         {props.review &&
-                        props.review.map((item, idx)=> (
+                        props.review.map((item, idx)=> (                            
                             <Tbody_tr id={item.id} key={idx} onClick={route}>
                                 <Tbody_td>{item.id}</Tbody_td>
+                                <Tbody_td><img style={{height:"100px", width:"100px" }} src={item.thumbnail}/> </Tbody_td>
                                 <Tbody_td>{item.title}</Tbody_td>
                                 <Tbody_td>{item.description}</Tbody_td>
                                 <Tbody_td>{item.liked.length}</Tbody_td>

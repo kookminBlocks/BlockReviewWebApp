@@ -9,10 +9,12 @@ export const CreateReview = async (review) => {
         StoreId:review.StoreId,
         Title:review.Title,
         Content:review.Content,
+        ThumbNail:review.ThumbNail,
+        NftUrl: review.NftUrl,
         User: {
             Id: review.UserId,
-            AccountPrivateKey: review.User.AccountPrivateKey,
-            AccountPublicKey: review.User.AccountPublicKey
+            AccountPublicKey: review.User.AccountPublicKey,
+            AccountPrivateKey: review.User.AccountPrivateKey,            
         }
     })       
     .catch(function(e) {
@@ -20,6 +22,8 @@ export const CreateReview = async (review) => {
     });
     return res;
 }
+
+
 
 
 export const GetReviewByStore = async (storeId) => {
