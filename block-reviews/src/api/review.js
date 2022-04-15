@@ -11,7 +11,7 @@ export const CreateReview = async (review) => {
         Content:review.Content,
         User: {
             Id: review.UserId,
-            AccountPrivateKey: review.User.AccoutPrivateKey,
+            AccountPrivateKey: review.User.AccountPrivateKey,
             AccountPublicKey: review.User.AccountPublicKey
         }
     })       

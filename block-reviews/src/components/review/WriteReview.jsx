@@ -30,8 +30,15 @@ function WriteReview(props) {
             }
         }
         console.log(payload);
-        const result = await CreateReview(payload);
-        console.log(result);
+        const res = await CreateReview(payload);
+
+        if(res.status !== 200){
+            alert("리뷰작성실패");
+        } else {
+            navi("/");
+            alert("리뷰작성성공");
+        }
+
         setSpinnerFlag(false);
     };
     

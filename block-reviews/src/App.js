@@ -13,12 +13,13 @@ import Header from "./components/Header/Header";
 // #region location
 import './App.css';
 import LoginCheck from './components/Commons/IsLogin'
-import { WriteReview_Url, login_Url,logout_Url , MyPage_Url, Register_Url, StoreList_Url, StoreCreate_Url, DetailStore_Url } from './components/Commons/PathUrl'
+import { ReviewDetail_Url, WriteReview_Url, login_Url,logout_Url , MyPage_Url, Register_Url, StoreList_Url, StoreCreate_Url, DetailStore_Url } from './components/Commons/PathUrl'
 import PrivateRoute from "./components/Commons/PrivateRoute";
 import PublicRoute from "./components/Commons/PublicRoute";
 import StoreList from "./components/Stores/StoreList";
 import WriteReview from "./components/review/WriteReview";
 import DetailStore from "./components/Stores/DetailStore";
+import DetailReview from "./components/review/Detail";
 
 //#endregion
 function App() {
@@ -76,13 +77,16 @@ function App() {
             <WriteReview />
           </PrivateRoute>}>
         </Route>
-
-
+        <Route path={ReviewDetail_Url} element={
+          <PrivateRoute>
+            <DetailReview />
+          </PrivateRoute>}>
+        </Route>
 
         {/* <Route path={logout_Url} element={
           <PrivateRoute isLogin={isLogin}>
             <Logout />
-          </PrivateRoute>}>          
+          </PrivateRoute>}>
         </Route>  
       */}
         <Route path="*" element={<p>There's nothing here: 404!</p>} />

@@ -3,24 +3,26 @@ import styled from "styled-components";
 import UserForm from "./sections/UserForm__My";
 import ReviewForm from "./sections/ReviewForm__My";
 import { GetReviewByUser } from "../../api/review";
+import { GetBalance } from "../../api/contract";
 
 function My(props) {
     const [UserInfo, setUserInfo] = useState(null);
     const [BRC_Balance, setBRC_Balance] = useState(0);
     const [ETH_Balance, setETH_Balance] = useState(0);
-    
-    const garaData = [
-        {idx : 1, title: "TestGara", description: "testGara", price: 0, earned: 150},
-        {idx : 2, title: "TestGara", description: "testGara", price: 100, earned: 150},
-        {idx : 3, title: "TestGara", description: "testGara", price: 0, earned: 150},
-        {idx : 4, title: "TestGara", description: "testGara", price: 200, earned: 150},
-    ]
+    const [ReviewData, setReviewData] = useState(null);
 
     useEffect(async() => {
         let user = JSON.parse(localStorage.getItem('user'));
         setUserInfo(user);
-        const result = await GetReviewByUser(user.accountPublicKey);
-        console.log(result);
+        const res = await GetReviewByUser(user.accountPublicKey);
+        if(res.data.success){
+            setReviewData(res.data.payload);
+        }
+
+        const BRC_Balance = await GetBalance(user.accountPublicKey);
+        if(BRC_Balance.status === 200){
+            setBRC_Balance(BRC_Balance.data.balance);
+        }
     }, []);
 
     const handleFaucet = () => {
@@ -34,12 +36,12 @@ function My(props) {
             </>
             {/* USER DATA */}
             {UserInfo &&
-                <UserForm user={UserInfo} />
+                <UserForm user={UserInfo} BRC_Balance={BRC_Balance}/>
             }
 
             {/* REVIEWS */}
-                <ReviewForm review={garaData} />
-    </BigContainer>
+                <ReviewForm review={ReviewData} />
+        </BigContainer>
     )
 }
 
