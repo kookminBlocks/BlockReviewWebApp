@@ -1,5 +1,5 @@
 import '../../scss/Login.scss'
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect } from 'react';
 import styled from "styled-components";
 import StoreReview from "./sections/StoreReview";
@@ -8,7 +8,7 @@ import { GetReviewByStore } from "../../api/review"
 function DetailStore(props) {
     const { storeId } = useParams();
     const [ReviewData, setReviewData] = useState(null);
-
+    const navi = useNavigate();
     const store = {Name:"가게", description: "설명", cate1:"음식점", cate2:"브런치 카페", thumbnail : "asdfsaf", Phone:"0100000000", address:"경기도 성남시 샬라샬라"}
 
     const garaReview = [
@@ -39,7 +39,9 @@ function DetailStore(props) {
             <h3>{store.Name}</h3>
             <div className='description' dangerouslySetInnerHTML={{ __html: store.description }}></div>
             <div className='address'>{store.address}</div>
-            
+            <button onClick={() => {
+                navi(`/review/write/${storeId}`);
+            }}>글쓰기</button>
             {/* 이곳에 리뷰 등록 폼 / 조회 리스트 쭈욱~ */}
             <StoreReview review={ReviewData}/>
         </div>

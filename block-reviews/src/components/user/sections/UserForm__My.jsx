@@ -27,11 +27,7 @@ function UserForm__My(props) {
                 </UserInfoBox>
                 <UserInfoBox>
                     <UserInfo_Label>BRC : </UserInfo_Label>
-                    <UserInfo_Content>BRC TOken Balance</UserInfo_Content>
-                </UserInfoBox>
-                <UserInfoBox>
-                    <UserInfo_Label>ETH : </UserInfo_Label>
-                    <UserInfo_Content>Ethereum Balance</UserInfo_Content>
+                    <UserInfo_Content>{props.BRC_Balance}</UserInfo_Content>
                 </UserInfoBox>
             </UserForm>
         </>
