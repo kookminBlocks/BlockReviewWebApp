@@ -22,3 +22,24 @@ export const CreateReview = async (review) => {
     });
     return res;
 }
+
+
+
+export const GetReviewByStore = async (storeId) => {
+    console.log(storeId)
+    try {
+        const res = await api.get(`/Review/GetReviewByStore/${storeId}`);
+        return res;
+    } catch (err) {
+        throw err;
+    }
+}
+
+export const GetReviewByUser = async (userId) => {
+    try {
+        const res = await api.get(`/Review/GetReviewByUser/${userId}`);
+        return res;
+    } catch(err) {
+        throw err;
+    }
+}

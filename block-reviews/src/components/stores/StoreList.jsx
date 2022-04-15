@@ -4,23 +4,18 @@ import { useState, useEffect } from 'react';
 import { GetStores }  from  '../../api/store'
 import { useNavigate } from "react-router-dom";
 
-
 function StoreList() {
-    const [stores, storeChanged] = useState([])    
-    
+    const [stores, storeChanged] = useState([]);
     useEffect(async () => {
         const res = await GetStores();
         if (res.status == 200)
         {
-            console.log(res.data)
             storeChanged(res.data)
         }
         else{
             
         }
-    },[])    
-    //     
-    // },[])    
+    },[]);
 
 
     return (
@@ -49,7 +44,8 @@ function CardItem(props){
     const navigate = useNavigate();
 
     const Btn_Click_Card = (e) => {
-        navigate('/store/detail' + e);
+        const route = `/store/detail/${e}`;
+        navigate(route);
     }
 
     return(
@@ -59,7 +55,7 @@ function CardItem(props){
                 <h5 className="card-title">{props.store.name}</h5>
                 <p className="card-text">{props.store.description}</p>                
             </div>
-        </div>        
+        </div>
     )
 }
 

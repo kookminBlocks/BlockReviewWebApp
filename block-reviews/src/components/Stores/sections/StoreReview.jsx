@@ -23,13 +23,13 @@ function StoreReview(props) {
                     </Thead>
                     {/* BODY */}
                     <Tbody>
-                        {props.garaReview &&
-                        props.garaReview.map((item, idx)=> (
+                        {props.review &&
+                        props.review.map((item, idx)=> (
                             <Tbody_tr id={item.id} key={idx} onClick={route}>
                                 <Tbody_td>{item.id}</Tbody_td>
                                 <Tbody_td>{item.title}</Tbody_td>
                                 <Tbody_td>{item.description}</Tbody_td>
-                                <Tbody_td>{item.liked}</Tbody_td>
+                                <Tbody_td>{item.liked.length}</Tbody_td>
                                 <Tbody_td>{item.sale ? "판매중":"X"}</Tbody_td>
                             </Tbody_tr>
                         ))

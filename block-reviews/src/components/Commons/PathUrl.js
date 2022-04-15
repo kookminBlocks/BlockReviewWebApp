@@ -5,4 +5,5 @@ export const MyPage_Url = '/my';
 export const StoreList_Url = '/store/list';
 export const StoreCreate_Url = '/store/create';
 export const ReviewDetail_Url = '/';
-export const WriteReview_Url = "/review/write/:storeId/:categoryId";
+export const WriteReview_Url = '/review/write/:storeId/:categoryId';
+export const DetailStore_Url = '/store/detail/:storeId';

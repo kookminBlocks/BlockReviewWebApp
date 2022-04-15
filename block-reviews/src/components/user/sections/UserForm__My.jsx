@@ -33,10 +33,6 @@ function UserForm__My(props) {
                     <UserInfo_Label>ETH : </UserInfo_Label>
                     <UserInfo_Content>Ethereum Balance</UserInfo_Content>
                 </UserInfoBox>
-                
-                <div style={{ textAlign: "center" }}>
-                    <Button onClick={logout}>LOGOUT</Button>
-                </div>
             </UserForm>
         </>
     )
