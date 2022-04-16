@@ -49,18 +49,13 @@ export default StoreReview;
 
 const Box = styled.div`
     width: 100%;
-    height: 40vh;
+    height: 60px;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: center;    
 `;
 
-const Table = styled.table`
-    width: 80%;
-    height: 100%;
-    border: 2px solid black;
-    overflow-y: scroll;
-    user-select: none;
+const Table = styled.table`    
+    border: 2px solid black;        
 `;
 
 const Thead = styled.thead`
