@@ -40,9 +40,9 @@ function DetailStore(props) {
 
                 {/* 이곳에 리뷰 등록 폼 / 조회 리스트 쭈욱~ */}
             </div>
-            <button onClick={() => {
+            <button className='btn btn-primary mb-5' style={{marginLeft:"250px"}} onClick={() => {
                 navi(`/review/write/${storeId}`);
-            }}>글쓰기</button>
+            }}>리뷰작성</button>
             <StoreReview review={ReviewData} />
         </div>
     )
