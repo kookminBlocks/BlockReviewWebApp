@@ -3,7 +3,7 @@ import styled from "styled-components";
 import UserForm from "./sections/UserForm__My";
 import ReviewForm from "./sections/ReviewForm__My";
 import { GetReviewByUser } from "../../api/review";
-import { GetBalance } from "../../api/contract";
+import { GetBalance, getNftUri } from "../../api/contract";
 
 function My(props) {
     const [UserInfo, setUserInfo] = useState(null);
@@ -25,8 +25,10 @@ function My(props) {
         }
     }, []);
 
-    const handleFaucet = () => {
-        console.log("FauCET API");
+    const handleFaucet = async() => {
+        console.log("Faucet");
+        const res = await getNftUri("33");
+        console.log(res);
     }
 
     return (
