@@ -28,6 +28,13 @@ function DetailStore(props) {
         }
     }, [])       
 
+    const LikeClicked_Callback = async () => {
+        const res = await GetReviewByStore(storeId);
+        if (res.data.success){
+            setReviewData(res.data.payload);
+        }
+    }
+
     return (
         <div>
             <div className='d-flex mb-3' style={{ marginTop: "30px", marginLeft:"250px" }}>
@@ -43,7 +50,7 @@ function DetailStore(props) {
             <button className='btn btn-primary mb-5' style={{marginLeft:"250px"}} onClick={() => {
                 navi(`/review/write/${storeId}`);
             }}>리뷰작성</button>
-            <StoreReview review={ReviewData} />
+            <StoreReview review={ReviewData} like_click={LikeClicked_Callback}/>
         </div>
     )
 }

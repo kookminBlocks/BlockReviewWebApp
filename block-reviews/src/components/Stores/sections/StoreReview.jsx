@@ -14,7 +14,7 @@ function StoreReview(props) {
   const [ntfUrl, UrlChanged] = useState();
   const [nftData, nftDataChanged] = useState();
 
-  const ipfsUrl = "https://ipfs.io/ipfs/";
+  const ipfsUrl = "http://3.38.183.241/ipfs/";
   const handleClose = () => modalChanged(false);
   const handleShow = () => modalChanged(true);
 
@@ -44,6 +44,7 @@ function StoreReview(props) {
     let res = await createLiked(postDt);
     if (res?.status == 200) {
       alert("좋아요 성공~");
+      props.like_click();
     } else {
       alert(`좋아요 실패 ${res.data}`);
     }
@@ -84,16 +85,16 @@ function StoreReview(props) {
                   <Tbody_td>{item.description}</Tbody_td>
                   <Tbody_td>
                     <div className="d-flex">
+                      {item.liked.length}
                       <div
                         onClick={(e) => {
                           e.stopPropagation();
                           Btn_Liked_Click(item);
                         }}
-                        style={{ fontSize: "35px" }}
+                        style={{ fontSize: "35px", cursor: "pointer"  }}
                       >
                         👍
                       </div>
-                      {item.liked.length}
                     </div>
                   </Tbody_td>
                   <Tbody_td>{item.sale ? "판매중" : "X"}</Tbody_td>
