@@ -40,3 +40,12 @@ export const UploadIpfs = async (formData) => {
     
     return res;
 }
+
+export const getNftUri = async(nftId) => {
+    try {
+        const res = await contract_Client.get(`/blockreview/review/nft/${nftId}`);
+        return res;
+    } catch (err) {
+        throw err;
+    }
+}
