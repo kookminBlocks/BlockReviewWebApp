@@ -80,7 +80,7 @@ export const adminPubKey = "0xB28333cab47389DE99277F1A79De9a80A8d8678b";
 
 export const onSale = async(params) => {
     try {
-        const res = await axios.post(`/blockreview/review/sale/onsale`, {
+        const res = await contract_Client.post(`/blockreview/review/sale/onsale`, {
             reviewId : params.reviewId,
             price : params.price,
             pubkey : params.pubkey,
@@ -94,7 +94,7 @@ export const onSale = async(params) => {
 
 export const offSale = async(params) => {
     try {
-        const res = await axios.post(`/blockreview/review/sale/offsale`, {
+        const res = await contract_Client.post(`/blockreview/review/sale/offsale`, {
             reviewId : params.reviewId,
             pubkey : params.pubkey,
             privateKey: params.privatekey,

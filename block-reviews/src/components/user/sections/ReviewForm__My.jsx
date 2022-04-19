@@ -1,10 +1,47 @@
 import React, { useEffect, useState } from 'react'
 import styled from "styled-components";
+import { onSale, offSale } from "../../../api/contract";
 
 function ReviewForm(props) {
+    const [UserPriceInput, setUserPriceInput] = useState("");
+
+    const Btn_onSale_Click = async(item)=> {
+        const reviewId = item.id;
+        let user = JSON.parse(localStorage.getItem('user'));
+
+        const payload = {
+            reviewId : Number(reviewId),
+            price : Number(UserPriceInput),
+            pubkey : user.accountPublicKey,
+            privatekey : user.accountPrivateKey
+        }
+
+        const res = await onSale(payload);
+        console.log(`---OnSale---`);
+        console.log(res);
+
+        console.log(payload);
+    }
+
+    const Btn_offSale_Click = async(item) => {
+        const reviewId = item.id;
+        let user = JSON.parse(localStorage.getItem('user'));
+
+        const payload = {
+            reviewId : reviewId,
+            pubkey : user.accountPublicKey,
+            privatekey : user.accountPrivateKey
+        }
+
+        const res = await offSale(payload);
+        console.log(`OffSale`);
+        console.log(res);
+    }
+
     return (
             <Container>
             <h1 style={{ textAlign: "center", fontWeight: "800" }}>나의 리뷰</h1>
+            <input type="text" placeholder="판매등록가격" value={UserPriceInput} onChange={e => setUserPriceInput(e.currentTarget.value)} />
                 <Table>
                     {/* Head */}
                     <Thead>
@@ -28,10 +65,10 @@ function ReviewForm(props) {
                                     <Tbody_div>{item.price ? item.price : "미판매"}</Tbody_div>
                                     <Tbody_div>{item.likeUser ? (item.likedUser.length * 100) * 0.8 : "0"}</Tbody_div>
                                     <Tbody_div>
-                                        <FunctionalBtn>등록</FunctionalBtn>
+                                        <FunctionalBtn id={item.id} onClick={() => Btn_onSale_Click(item)}>등록</FunctionalBtn>
                                     </Tbody_div>
                                     <Tbody_div>
-                                        <FunctionalBtn>철회</FunctionalBtn>
+                                        <FunctionalBtn id={item.id} onClick={() => Btn_offSale_Click(item)}>철회</FunctionalBtn>
                                     </Tbody_div>
                                 </>
                             </Tbody>
@@ -42,8 +79,7 @@ function ReviewForm(props) {
                 </div>
                 }
             </Table>
-        </Container>   
-
+        </Container>
     )
 }
 
