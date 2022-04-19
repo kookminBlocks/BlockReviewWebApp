@@ -1,13 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from "styled-components";
+import {Modal, Button} from 'react-bootstrap'
 
 function StoreReview(props) {
+    const [modalReview, reviewChanged] = useState(null);
+    const [modalShow, modalChanged] = useState(false);
+
+    const handleClose = () => modalChanged(false);
+    const handleShow = () => modalChanged(true);
 
     console.log(props.review);
 
-    const route = (e) => {
-        console.log(e.currentTarget);
-        console.log(`NAVI TO item.id`)
+    const Review_Clicked = (item) => {
+        reviewChanged(item);
+        handleShow();
     }
     return (
         <>
@@ -28,7 +34,7 @@ function StoreReview(props) {
                     <Tbody>
                         {props.review &&
                         props.review.map((item, idx)=> (                            
-                            <Tbody_tr id={item.id} key={idx} onClick={route}>
+                            <Tbody_tr id={item.id} key={idx} onClick={() => Review_Clicked(item)}>
                                 <Tbody_td>{item.id}</Tbody_td>
                                 <Tbody_td><img style={{height:"100px", width:"100px" }} src={item.thumbnail}/> </Tbody_td>
                                 <Tbody_td>{item.title}</Tbody_td>
@@ -41,6 +47,27 @@ function StoreReview(props) {
                     </Tbody>
                 </Table>
             </Box>
+
+            <Modal
+                show={modalShow}
+                onHide={handleClose}
+                backdrop="static"
+                keyboard={false}
+            >
+                <Modal.Header closeButton>
+                <Modal.Title> {modalReview?.title}</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    {modalReview?.description}
+                    <h3>NFT 정보</h3>
+                    {modalReview?.nftId}
+                </Modal.Body>
+                <Modal.Footer>
+                <Button variant="secondary" onClick={handleClose}>
+                    Close
+                </Button>                
+                </Modal.Footer>
+            </Modal>
         </>
     )
 }
