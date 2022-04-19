@@ -6,6 +6,7 @@ import {
   getNftData,
   createLiked,
   adminPubKey,
+  trade,
 } from "../../../api/contract";
 
 function StoreReview(props) {
@@ -50,6 +51,23 @@ function StoreReview(props) {
     }
   };
 
+  const Btn_Buy_Clicked = async (review) => {
+    // 유저정보읽기
+    let user = JSON.parse(localStorage.getItem("user"));
+    const params = {
+      reviewId:review.id,
+      pubkey_buyer: user.accountPublicKey,
+      privatekey_buyer: user.accountPrivateKey,
+    }
+    const res = await trade(params)
+    if (res?.status == 200){
+      alert("구매완료");
+    }
+    else{
+      alert(res?.data);
+    }
+  }
+
   return (
     <>
       <Box>
@@ -63,6 +81,7 @@ function StoreReview(props) {
               <Thead_td>Description</Thead_td>
               <Thead_td>liked</Thead_td>
               <Thead_td>sale</Thead_td>
+              <Thead_td>구매</Thead_td>
             </Thead_tr>
           </Thead>
           {/* BODY */}
@@ -97,7 +116,14 @@ function StoreReview(props) {
                       </div>
                     </div>
                   </Tbody_td>
-                  <Tbody_td>{item.sale ? "판매중" : "X"}</Tbody_td>
+                  <Tbody_td>
+                    {item.sale ? "판매중" : "X"}
+                  </Tbody_td>
+                  <Tbody_td>
+                    <button className="btn btn-primary" onClick={(e) => {  e.stopPropagation(); Btn_Buy_Clicked(item);}}>
+                      구매하기
+                    </button>
+                  </Tbody_td>
                 </Tbody_tr>
               ))}
           </Tbody>
