@@ -1,3 +1,4 @@
+import axios from 'axios';
 import contract_Client from './bcClient';
 
 // Get User BRC Balance;
@@ -41,6 +42,7 @@ export const UploadIpfs = async (formData) => {
     return res;
 }
 
+// NFT URL 가져오기
 export const getNftUri = async(nftId) => {
     try {
         const res = await contract_Client.get(`/blockreview/review/nft/${nftId}`);
@@ -49,3 +51,29 @@ export const getNftUri = async(nftId) => {
         throw err;
     }
 }
+
+// 리뷰 좋아요 클릭
+export const createLiked = async(postData) => {
+    try {
+        const res = await contract_Client.post(`/blockreview/review/like`,postData)
+        .catch(function(e){
+            console.log(e);
+        });
+        
+        return res;
+    } catch (err) {
+        throw err;
+    }
+}
+
+// NFT 데이터 정보 가져오기
+export const getNftData = async(nftUrl) => {
+    try {        
+        const res = await axios.get(nftUrl);
+        return res;
+    } catch (err) {
+        throw err;
+    }
+}
+
+export const adminPubKey = "0xB28333cab47389DE99277F1A79De9a80A8d8678b";
