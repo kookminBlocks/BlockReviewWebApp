@@ -55,54 +55,46 @@ function StoreReview(props) {
     // 유저정보읽기
     let user = JSON.parse(localStorage.getItem("user"));
     const params = {
-      reviewId:review.id,
+      reviewId: review.id,
       pubkey_buyer: user.accountPublicKey,
       privatekey_buyer: user.accountPrivateKey,
-    }
-    const res = await trade(params)
-    if (res?.status == 200){
+    };
+    const res = await trade(params);
+    if (res?.status == 200) {
       alert("구매완료");
-    }
-    else{
+    } else {
       alert(res?.data);
     }
-  }
+  };
 
   return (
     <>
       <Box>
-        <Table>
-          {/* HEAD */}
-          <Thead>
-            <Thead_tr>
-              <Thead_td>ID</Thead_td>
-              <Thead_td>썸네일</Thead_td>
-              <Thead_td>Title</Thead_td>
-              <Thead_td>Description</Thead_td>
-              <Thead_td>liked</Thead_td>
-              <Thead_td>sale</Thead_td>
-              <Thead_td>구매</Thead_td>
-            </Thead_tr>
-          </Thead>
-          {/* BODY */}
-          <Tbody>
+        <table className="table table-hover">
+          <thead className="thead-dark">
+            <tr>
+              <th className="thead">ID</th>
+              <th className="thead">Thumb</th>
+              <th className="thead">제목</th>
+              <th className="thead">내용</th>
+              <th className="thead">판매여부</th>
+              <th className="thead">구매하기</th>
+            </tr>
+          </thead>
+          <tbody>
             {props.review &&
               props.review.map((item, idx) => (
-                <Tbody_tr
-                  id={item.id}
-                  key={idx}
-                  onClick={() => Review_Clicked(item)}
-                >
-                  <Tbody_td>{item.id}</Tbody_td>
-                  <Tbody_td>
+                <tr id={item.id} key={idx} onClick={() => Review_Clicked(item)}>
+                  <td>{item.id}</td>
+                  <td>
                     <img
                       style={{ height: "100px", width: "100px" }}
                       src={item.thumbnail}
                     />{" "}
-                  </Tbody_td>
-                  <Tbody_td>{item.title}</Tbody_td>
-                  <Tbody_td>{item.description}</Tbody_td>
-                  <Tbody_td>
+                  </td>
+                  <td>{item.title}</td>
+                  <td>{item.description}</td>
+                  <td>
                     <div className="d-flex">
                       {item.liked.length}
                       <div
@@ -110,24 +102,28 @@ function StoreReview(props) {
                           e.stopPropagation();
                           Btn_Liked_Click(item);
                         }}
-                        style={{ fontSize: "35px", cursor: "pointer"  }}
+                        style={{ fontSize: "35px", cursor: "pointer" }}
                       >
                         👍
                       </div>
                     </div>
-                  </Tbody_td>
-                  <Tbody_td>
-                    {item.sale ? "판매중" : "X"}
-                  </Tbody_td>
-                  <Tbody_td>
-                    <button className="btn btn-primary" onClick={(e) => {  e.stopPropagation(); Btn_Buy_Clicked(item);}}>
+                  </td>
+                  <td>{item.sale ? "판매중" : "X"}</td>
+                  <td>
+                    <button
+                      className="btn btn-primary"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        Btn_Buy_Clicked(item);
+                      }}
+                    >
                       구매하기
                     </button>
-                  </Tbody_td>
-                </Tbody_tr>
+                  </td>
+                </tr>
               ))}
-          </Tbody>
-        </Table>
+          </tbody>
+        </table>
       </Box>
 
       <Modal
