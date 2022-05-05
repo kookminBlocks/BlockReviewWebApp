@@ -8,12 +8,14 @@ import {
   adminPubKey,
   trade,
 } from "../../../api/contract";
+import Spinner from "../../Utils/Spinner";
 
 function StoreReview(props) {
   const [modalReview, reviewChanged] = useState(null);
   const [modalShow, modalChanged] = useState(false);
   const [ntfUrl, UrlChanged] = useState();
   const [nftData, nftDataChanged] = useState();
+  const [SpinnerFlag, setSpinnerFlag] = useState(false);
 
   const ipfsUrl = "http://3.38.183.241/ipfs/";
   const handleClose = () => modalChanged(false);
@@ -33,6 +35,7 @@ function StoreReview(props) {
   };
 
   const Btn_Liked_Click = async (review) => {
+    setSpinnerFlag(true);
     // 유저정보읽기
     let user = JSON.parse(localStorage.getItem("user"));
     const postDt = {
@@ -49,10 +52,13 @@ function StoreReview(props) {
     } else {
       alert(`좋아요 실패 ${res.data}`);
     }
+
+    setSpinnerFlag(false);
   };
 
   const Btn_Buy_Clicked = async (review) => {
     // 유저정보읽기
+    setSpinnerFlag(true);
     let user = JSON.parse(localStorage.getItem("user"));
     const params = {
       reviewId: review.id,
@@ -65,23 +71,30 @@ function StoreReview(props) {
     } else {
       alert(res?.data);
     }
+
+    setSpinnerFlag(false);
   };
 
   return (
     <>
       <Box>
+      {SpinnerFlag ? 
+            <div style={{ width: "100%", height: "60vh", display: "flex", justifyContent: "center", alignItems: "center" }}>
+                <Spinner /> 
+            </div>
+        :
         <table className="table table-hover">
-          <thead className="thead-dark">
+          <thead className="thead-dark text-center">
             <tr>
               <th className="thead">ID</th>
               <th className="thead">Thumb</th>
               <th className="thead">제목</th>
               <th className="thead">내용</th>
-              <th className="thead">판매여부</th>
+              <th className="thead">좋아요</th>              
               <th className="thead">구매하기</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className="text-center">
             {props.review &&
               props.review.map((item, idx) => (
                 <tr id={item.id} key={idx} onClick={() => Review_Clicked(item)}>
@@ -95,7 +108,7 @@ function StoreReview(props) {
                   <td>{item.title}</td>
                   <td>{item.description}</td>
                   <td>
-                    <div className="d-flex">
+                    <div className="text-center">
                       {item.liked.length}
                       <div
                         onClick={(e) => {
@@ -108,22 +121,25 @@ function StoreReview(props) {
                       </div>
                     </div>
                   </td>
-                  <td>{item.sale ? "판매중" : "X"}</td>
                   <td>
-                    <button
-                      className="btn btn-primary"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        Btn_Buy_Clicked(item);
-                      }}
-                    >
-                      구매하기
-                    </button>
+                    {                      
+                    item.price > 0 ? (
+                      <button
+                        className="btn btn-primary"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          Btn_Buy_Clicked(item);
+                        }}
+                      >
+                        구매하기
+                      </button>
+                    ) : "판매여부(x)"}
                   </td>
                 </tr>
               ))}
           </tbody>
         </table>
+}
       </Box>
 
       <Modal
@@ -164,6 +180,8 @@ export default StoreReview;
 const Box = styled.div`
   width: 100%;
   height: 60px;
+  padding-left:100px;
+  padding-Right:100px;
   display: flex;
   justify-content: center;
 `;

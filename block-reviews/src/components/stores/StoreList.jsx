@@ -3,6 +3,7 @@ import "../../scss/Login.scss";
 import { useState, useEffect } from "react";
 import { GetStores } from "../../api/store";
 import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
 
 function StoreList() {
   const [stores, storeChanged] = useState([]);
@@ -50,12 +51,19 @@ function CardItem(props) {
         src={props.store.thumbNail}
         alt="스토어 이미지"
       />
-      <div className="card-body">
+      <div className="card-body">        
         <h5 className="card-title">{props.store.name}</h5>
         <p className="card-text">{props.store.description}</p>
+
       </div>
     </div>
   );
 }
 
 export default StoreList;
+
+
+const reviewCnt = styled.div`
+  font-Size:14px;
+  color:#94D8F6;
+`;

@@ -4,8 +4,10 @@ import UserForm from "./sections/UserForm__My";
 import ReviewForm from "./sections/ReviewForm__My";
 import { GetReviewByUser } from "../../api/review";
 import { GetBalance, getNftUri } from "../../api/contract";
+import Spinner from "../Utils/Spinner";
 
 function My(props) {
+    const [SpinnerFlag, setSpinnerFlag] = useState(false);
     const [UserInfo, setUserInfo] = useState(null);
     const [BRC_Balance, setBRC_Balance] = useState(0);
     const [ETH_Balance, setETH_Balance] = useState(0);
@@ -33,16 +35,21 @@ function My(props) {
 
     return (
         <BigContainer>
-            <>
-                <FaucetBtn onClick={handleFaucet}>🚰 수도꼭지</FaucetBtn>
-            </>
-            {/* USER DATA */}
-            {UserInfo &&
-                <UserForm user={UserInfo} BRC_Balance={BRC_Balance}/>
+            {
+                SpinnerFlag?
+                <Spinner/>
+                :
+                <>
+                    <FaucetBtn onClick={handleFaucet}>🚰 수도꼭지</FaucetBtn>
+    
+                    { UserInfo &&
+                        <UserForm user={UserInfo} BRC_Balance={BRC_Balance}/>}
+                
+    
+                    <ReviewForm review={ReviewData} setSpinnerFlag={setSpinnerFlag} />
+                </>
             }
-
-            {/* REVIEWS */}
-                <ReviewForm review={ReviewData} />
+       
         </BigContainer>
     )
 }
